@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<!-- saved from url=(0121)https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_07-Manage_Azure_Storage.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>
+            AZ-104-MicrosoftAzureAdministrator
+        </title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="./AZ-104-MicrosoftAzureAdministrator_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./AZ-104-MicrosoftAzureAdministrator_files/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="./AZ-104-MicrosoftAzureAdministrator_files/vs.min.css">
+        <script src="./AZ-104-MicrosoftAzureAdministrator_files/highlight.min.js.download"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <link rel="stylesheet" href="./AZ-104-MicrosoftAzureAdministrator_files/style.css">
+    </head>
+    <body data-spy="scroll" data-target="#linksMenu" data-new-gr-c-s-check-loaded="14.1123.0" data-gr-ext-installed="">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gray">
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-white" href="https://docs.microsoft.com/training/">
+                <img src="./AZ-104-MicrosoftAzureAdministrator_files/microsoft-gray.png" alt="Microsoft logo" style="width:100px;height:21px;">
+            </a>
+            <span class="my-1 title text-black">Microsoft Learn</span>
+            <span class="ml-2"><a href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator">≡</a></span>
+        </div>
+        <!--
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-azure text-uppercase" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator">
+                AZ-104-MicrosoftAzureAdministrator
+            </a>
+            <a href="https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator" target="_blank" class="btn btn-sm btn-outline-secondary text-light">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <span class="ml-2">GitHub</span>
+            </a>
+        </div>
+        -->
+    </nav>
+    <hr color-"gray"="">
+    <div class="container">
+        <main class="row extra-padding">
+            <aside class="col-sm-2">       
+                <nav id="linksMenu" class="toc sticky-top">
+                    <ul class="nav navbar-nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_07-Manage_Azure_Storage.html#lab-scenario">Lab scenario</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_07-Manage_Azure_Storage.html#objectives">Objectives</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_07-Manage_Azure_Storage.html#estimated-timing-40-minutes">Estimated timing: 40 minutes</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_07-Manage_Azure_Storage.html#architecture-diagram">Architecture diagram</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_07-Manage_Azure_Storage.html#exercise-1">Exercise 1</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_07-Manage_Azure_Storage.html#task-1-provision-the-lab-environment">Task 1: Provision the lab environment</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_07-Manage_Azure_Storage.html#task-2-create-and-configure-azure-storage-accounts">Task 2: Create and configure Azure Storage accounts</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_07-Manage_Azure_Storage.html#task-3-manage-blob-storage">Task 3: Manage blob storage</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_07-Manage_Azure_Storage.html#task-4-manage-authentication-and-authorization-for-azure-storage">Task 4: Manage authentication and authorization for Azure Storage</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_07-Manage_Azure_Storage.html#task-5-create-and-configure-an-azure-files-shares">Task 5: Create and configure an Azure Files shares</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_07-Manage_Azure_Storage.html#task-6-manage-network-access-for-azure-storage">Task 6: Manage network access for Azure Storage</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_07-Manage_Azure_Storage.html#clean-up-resources">Clean up resources</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_07-Manage_Azure_Storage.html#review">Review</a></li></ul>
+                </nav>         
+            </aside>
+            <hr class="">
+            <article class="col-sm-10 mb-5">
+                <h1 id="lab-07---manage-azure-storage">Lab 07 - Manage Azure Storage</h1>
+<h1 id="student-lab-manual">Student lab manual</h1>
+
+<h2 id="lab-scenario">Lab scenario</h2>
+
+<p>You need to evaluate the use of Azure storage for storing files residing currently in on-premises data stores. While majority of these files are not accessed frequently, there are some exceptions. You would like to minimize cost of storage by placing less frequently accessed files in lower-priced storage tiers. You also plan to explore different protection mechanisms that Azure Storage offers, including network access, authentication, authorization, and replication. Finally, you want to determine to what extent Azure Files service might be suitable for hosting your on-premises file shares.</p>
+
+<p><strong>Note:</strong> An <strong><a href="https://mslabs.cloudguides.com/guides/AZ-104%20Exam%20Guide%20-%20Microsoft%20Azure%20Administrator%20Exercise%2011">interactive lab simulation</a></strong> is available that allows you to click through this lab at your own pace. You may find slight differences between the interactive simulation and the hosted lab, but the core concepts and ideas being demonstrated are the same.</p>
+
+<h2 id="objectives">Objectives</h2>
+
+<p>In this lab, you will:</p>
+
+<ul>
+  <li>Task 1: Provision the lab environment</li>
+  <li>Task 2: Create and configure Azure Storage accounts</li>
+  <li>Task 3: Manage blob storage</li>
+  <li>Task 4: Manage authentication and authorization for Azure Storage</li>
+  <li>Task 5: Create and configure an Azure Files shares</li>
+  <li>Task 6: Manage network access for Azure Storage</li>
+</ul>
+
+<h2 id="estimated-timing-40-minutes">Estimated timing: 40 minutes</h2>
+
+<h2 id="architecture-diagram">Architecture diagram</h2>
+
+<p><a href="./AZ-104-MicrosoftAzureAdministrator_files/lab07.png" target="_blank"><img src="./AZ-104-MicrosoftAzureAdministrator_files/lab07.png" alt="image"></a></p>
+
+<h3 id="instructions">Instructions</h3>
+
+<h2 id="exercise-1">Exercise 1</h2>
+
+<h2 id="task-1-provision-the-lab-environment">Task 1: Provision the lab environment</h2>
+
+<p>In this task, you will deploy an Azure virtual machine that you will use later in this lab.</p>
+
+<ol>
+  <li>
+    <p>Sign in to the <a href="https://portal.azure.com/">Azure portal</a>.</p>
+  </li>
+  <li>
+    <p>In the Azure portal, open the <strong>Azure Cloud Shell</strong> by clicking on the icon in the top right of the Azure Portal.</p>
+  </li>
+  <li>
+    <p>If prompted to select either <strong>Bash</strong> or <strong>PowerShell</strong>, select <strong>PowerShell</strong>.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: If this is the first time you are starting <strong>Cloud Shell</strong> and you are presented with the <strong>You have no storage mounted</strong> message, select the subscription you are using in this lab, and click <strong>Create storage</strong>.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>In the toolbar of the Cloud Shell pane, click the <strong>Upload/Download files</strong> icon, in the drop-down menu, click <strong>Upload</strong> and upload the files <strong>\Allfiles\Labs\07\az104-07-vm-template.json</strong> and <strong>\Allfiles\Labs\07\az104-07-vm-parameters.json</strong> into the Cloud Shell home directory.</p>
+  </li>
+  <li>
+    <p>From the Cloud Shell pane, run the following to create the resource group that will be hosting the virtual machine (replace the ‘[Azure_region]’ placeholder with the name of an Azure region where you intend to deploy the Azure virtual machine)</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: To list the names of Azure regions, run <code>(Get-AzLocation).Location</code>
+<strong>Note</strong>: Each command below should be typed separately</p>
+    </blockquote>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock0" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock0" class="mt-0"><code class="language-powershell"> $location = '[Azure_region]'
+</code></pre>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock1" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock1" class="mt-0"><code class="language-powershell">  $rgName = 'az104-07-rg0'
+</code></pre>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock2" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock2" class="mt-0"><code class="language-powershell"> New-AzResourceGroup -Name $rgName -Location $location
+</code></pre>
+  </li>
+  <li>
+    <p>From the Cloud Shell pane, run the following to deploy the virtual machine by using the uploaded template and parameter files:</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: You will be prompted to provide an Admin password.</p>
+    </blockquote>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock3" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock3" class="mt-0"><code class="language-powershell">New-AzResourceGroupDeployment `
+   -ResourceGroupName $rgName `
+   -TemplateFile $HOME/az104-07-vm-template.json `
+   -TemplateParameterFile $HOME/az104-07-vm-parameters.json `
+   -AsJob
+</code></pre>
+
+    <blockquote>
+      <p><strong>Note</strong>: Do not wait for the deployments to complete, but proceed to the next task.</p>
+    </blockquote>
+
+    <blockquote>
+      <p><strong>Note</strong>: If you got an error stating the VM size is not available please ask your instructor for assistance and try these steps.</p>
+      <ol>
+        <li>Click on the <code>{}</code> button in your CloudShell, select the <strong>az104-07-vm-parameters.json</strong> from the left hand side bar and take a note of the <code>vmSize</code> parameter value.</li>
+        <li>Check the location in which the ‘az104-04-rg1’ resource group is deployed. You can run <code>az group show -n az104-04-rg1 --query location</code> in your CloudShell to get it.</li>
+        <li>Run <code>az vm list-skus --location &lt;Replace with your location&gt; -o table --query "[? contains(name,'Standard_D2s')].name"</code> in your CloudShell.</li>
+        <li>Replace the value of <code>vmSize</code> parameter with one of the values returned by the command you just run.</li>
+        <li>Now redeploy your templates by running the <code>New-AzResourceGroupDeployment</code> command again. You can press the up button a few times which would bring the last executed command.</li>
+      </ol>
+    </blockquote>
+  </li>
+  <li>
+    <p>Close the Cloud Shell pane.</p>
+  </li>
+</ol>
+
+<h2 id="task-2-create-and-configure-azure-storage-accounts">Task 2: Create and configure Azure Storage accounts</h2>
+
+<p>In this task, you will create and configure an Azure Storage account.</p>
+
+<ol>
+  <li>
+    <p>In the Azure portal, search for and select <strong>Storage accounts</strong>, and then click <strong>+ Create</strong>.</p>
+  </li>
+  <li>
+    <p>On the <strong>Basics</strong> tab of the <strong>Create storage account</strong> blade, specify the following settings (leave others with their default values):</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Subscription</td>
+          <td>the name of the Azure subscription you are using in this lab</td>
+        </tr>
+        <tr>
+          <td>Resource group</td>
+          <td>the name of a <strong>new</strong> resource group <strong>az104-07-rg1</strong></td>
+        </tr>
+        <tr>
+          <td>Storage account name</td>
+          <td>any globally unique name between 3 and 24 in length consisting of letters and digits</td>
+        </tr>
+        <tr>
+          <td>Region</td>
+          <td>the name of an Azure region where you can create an Azure Storage account</td>
+        </tr>
+        <tr>
+          <td>Performance</td>
+          <td><strong>Standard</strong></td>
+        </tr>
+        <tr>
+          <td>Redundancy</td>
+          <td><strong>Geo-redundant storage (GRS)</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Click <strong>Next: Advanced &gt;</strong>, on the <strong>Advanced</strong> tab of the <strong>Create storage account</strong> blade, review the available options, accept the defaults, and click <strong>Next: Networking &gt;</strong>.</p>
+  </li>
+  <li>
+    <p>On the <strong>Networking</strong> tab of the <strong>Create storage account</strong> blade, review the available options, accept the default option <strong>Enable public access from all networks</strong> and click <strong>Next: Data protection &gt;</strong>.</p>
+  </li>
+  <li>
+    <p>On the <strong>Data protection</strong> tab of the <strong>Create storage account</strong> blade, review the available options, accept the defaults, click <strong>Review + Create</strong>, wait for the validation process to complete and click <strong>Create</strong>.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: Wait for the Storage account to be created. This should take about 2 minutes.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>On the deployment blade, click <strong>Go to resource</strong> to display the Azure Storage account blade.</p>
+  </li>
+  <li>
+    <p>On the Storage account blade, in the <strong>Data management</strong> section, click <strong>Redundancy</strong> and note the secondary location.</p>
+  </li>
+  <li>
+    <p>In the <strong>Redundancy</strong> drop-down list select <strong>Locally redundant storage (LRS)</strong> and save the change. Note, at this point, the Storage account has only the primary location.</p>
+  </li>
+  <li>
+    <p>On the Storage account blade, in the <strong>Settings</strong> section, select <strong>Configuration</strong>. Set <strong>Blob access tier (default)</strong> to <strong>Cool</strong>, and save the change.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: The cool access tier is optimal for data which is not accessed frequently.</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="task-3-manage-blob-storage">Task 3: Manage blob storage</h2>
+
+<p>In this task, you will create a blob container and upload a blob into it.</p>
+
+<ol>
+  <li>
+    <p>On the Storage account blade, in the <strong>Data storage</strong> section, click <strong>Containers</strong>.</p>
+  </li>
+  <li>
+    <p>Click <strong>+ Container</strong> and create a container with the following settings:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Name</td>
+          <td><strong>az104-07-container</strong></td>
+        </tr>
+        <tr>
+          <td>Public access level</td>
+          <td><strong>Private (no anonymous access)</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>In the list of containers, click <strong>az104-07-container</strong> and then click <strong>Upload</strong>.</p>
+  </li>
+  <li>
+    <p>Browse to <strong>\Allfiles\Labs\07\LICENSE</strong> on your lab computer and click <strong>Open</strong>.</p>
+  </li>
+  <li>
+    <p>On the <strong>Upload blob</strong> blade, expand the <strong>Advanced</strong> section and specify the following settings (leave others with their default values):</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Blob type</td>
+          <td><strong>Block blob</strong></td>
+        </tr>
+        <tr>
+          <td>Block size</td>
+          <td><strong>4 MB</strong></td>
+        </tr>
+        <tr>
+          <td>Access tier</td>
+          <td><strong>Hot</strong></td>
+        </tr>
+        <tr>
+          <td>Upload to folder</td>
+          <td><strong>licenses</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <blockquote>
+      <p><strong>Note</strong>: Access tier can be set for individual blobs.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Click <strong>Upload</strong>.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: Note that the upload automatically created a subfolder named <strong>licenses</strong>.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Back on the <strong>az104-07-container</strong> blade, click <strong>licenses</strong> and then click <strong>LICENSE</strong>.</p>
+  </li>
+  <li>
+    <p>On the <strong>licenses/LICENSE</strong> blade, review the available options.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: You have the option to download the blob, change its access tier (it is currently set to <strong>Hot</strong>), acquire a lease, which would change its lease status to <strong>Locked</strong> (it is currently set to <strong>Unlocked</strong>) and protect the blob from being modified or deleted, as well as assign custom metadata (by specifying an arbitrary key and value pairs). You also have the ability to <strong>Edit</strong> the file directly within the Azure portal interface, without downloading it first. You can also create snapshots, as well as generate a SAS token (you will explore this option in the next task).</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="task-4-manage-authentication-and-authorization-for-azure-storage">Task 4: Manage authentication and authorization for Azure Storage</h2>
+
+<p>In this task, you will configure authentication and authorization for Azure Storage.</p>
+
+<ol>
+  <li>
+    <p>On the <strong>licenses/LICENSE</strong> blade, on the <strong>Overview</strong> tab, click <strong>Copy to clipboard</strong> button next to the <strong>URL</strong> entry.</p>
+  </li>
+  <li>
+    <p>Open another browser window by using InPrivate mode and navigate to the URL you copied in the previous step.</p>
+  </li>
+  <li>
+    <p>You should be presented with an XML-formatted message stating <strong>ResourceNotFound</strong> or <strong>PublicAccessNotPermitted</strong>.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: This is expected, since the container you created has the public access level set to <strong>Private (no anonymous access)</strong>.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Close the InPrivate mode browser window, return to the browser window showing the <strong>licenses/LICENSE</strong> blade of the Azure Storage container, and switch to the the <strong>Generate SAS</strong> tab.</p>
+  </li>
+  <li>
+    <p>On the <strong>Generate SAS</strong> tab of the <strong>licenses/LICENSE</strong> blade, specify the following settings (leave others with their default values):</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Signing key</td>
+          <td><strong>Key 1</strong></td>
+        </tr>
+        <tr>
+          <td>Permissions</td>
+          <td><strong>Read</strong></td>
+        </tr>
+        <tr>
+          <td>Start date</td>
+          <td>yesterday’s date</td>
+        </tr>
+        <tr>
+          <td>Start time</td>
+          <td>current time</td>
+        </tr>
+        <tr>
+          <td>Expiry date</td>
+          <td>tomorrow’s date</td>
+        </tr>
+        <tr>
+          <td>Expiry time</td>
+          <td>current time</td>
+        </tr>
+        <tr>
+          <td>Allowed IP addresses</td>
+          <td>leave blank</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Click <strong>Generate SAS token and URL</strong>.</p>
+  </li>
+  <li>
+    <p>Click <strong>Copy to clipboard</strong> button next to the <strong>Blob SAS URL</strong> entry.</p>
+  </li>
+  <li>
+    <p>Open another browser window by using InPrivate mode and navigate to the URL you copied in the previous step.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: If you are using Microsoft Edge, you should be presented with the <strong>The MIT License (MIT)</strong> page. If you are using Chrome, Microsoft Edge (Chromium) or Firefox, you should be able to view the content of the file by downloading it and opening it with Notepad.</p>
+    </blockquote>
+
+    <blockquote>
+      <p><strong>Note</strong>: This is expected, since now your access is authorized based on the newly generated the SAS token.</p>
+    </blockquote>
+
+    <blockquote>
+      <p><strong>Note</strong>: Save the blob SAS URL. You will need it later in this lab.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Close the InPrivate mode browser window, return to the browser window showing the <strong>licenses/LICENSE</strong> blade of the Azure Storage container, and from there, navigate back to the <strong>az104-07-container</strong> blade.</p>
+  </li>
+  <li>
+    <p>Click the <strong>Switch to the Azure AD User Account</strong> link next to the <strong>Authentication method</strong> label.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: You can see an error when you change the authentication method (the error is <em>“You do not have permissions to list the data using your user account with Azure AD”</em>). It is expected.</p>
+    </blockquote>
+
+    <blockquote>
+      <p><strong>Note</strong>: At this point, you do not have permissions to change the Authentication method.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>On the <strong>az104-07-container</strong> blade, click <strong>Access Control (IAM)</strong>.</p>
+  </li>
+  <li>
+    <p>On the <strong>Check access</strong> tab, click <strong>Add role assignment</strong>.</p>
+  </li>
+  <li>
+    <p>On the <strong>Add role assignment</strong> blade, specify the following settings:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Role</td>
+          <td><strong>Storage Blob Data Owner</strong></td>
+        </tr>
+        <tr>
+          <td>Assign access to</td>
+          <td><strong>User, group, or service principal</strong></td>
+        </tr>
+        <tr>
+          <td>Members</td>
+          <td>the name of your user account</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Click <strong>Review + Assign</strong> and then <strong>Review + assign</strong>, and return to the <strong>Overview</strong> blade of the <strong>az104-07-container</strong> container and verify that you can change the Authentication method to (Switch to Azure AD User Account).</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: It might take about 5 minutes for the change to take effect.</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="task-5-create-and-configure-an-azure-files-shares">Task 5: Create and configure an Azure Files shares</h2>
+
+<p>In this task, you will create and configure Azure Files shares.</p>
+
+<blockquote>
+  <p><strong>Note</strong>: Before you start this task, verify that the virtual machine you provisioned in the first task of this lab is running.</p>
+</blockquote>
+
+<ol>
+  <li>
+    <p>In the Azure portal, navigate back to the blade of the storage account you created in the first task of this lab and, in the <strong>Data storage</strong> section, click <strong>File shares</strong>.</p>
+  </li>
+  <li>
+    <p>Click <strong>+ File share</strong> and on the <strong>Basics</strong> tab give the file share a name, <strong>az104-07-share</strong>. Review the other settings on this tab.</p>
+  </li>
+  <li>
+    <p>Move to the <strong>Backup</strong> tab, and ensure <strong>Enable Backup</strong> is <strong>not</strong> checked.</p>
+  </li>
+  <li>
+    <p>Click <strong>Review and create</strong>, and then <strong>Create</strong>. Wait for the file share to deploy.</p>
+  </li>
+  <li>
+    <p>Click the newly created file share and click <strong>Connect</strong>.</p>
+  </li>
+  <li>
+    <p>On the <strong>Connect</strong> blade, ensure that the <strong>Windows</strong> tab is selected. Below you will find a button with the label <strong>Show Script</strong>. Click on the button and you will find grey textbox with a script, in the bottom right corner of that box hover over the pages icon and click <strong>Copy to clipboard</strong>.</p>
+  </li>
+  <li>
+    <p>In the Azure portal, search for and select <strong>Virtual machines</strong>, and, in the list of virtual machines, click <strong>az104-07-vm0</strong>.</p>
+  </li>
+  <li>
+    <p>On the <strong>az104-07-vm0</strong> blade, in the <strong>Operations</strong> section, click <strong>Run command</strong>.</p>
+  </li>
+  <li>
+    <p>On the <strong>az104-07-vm0 - Run command</strong> blade, click <strong>RunPowerShellScript</strong>.</p>
+  </li>
+  <li>
+    <p>On the <strong>Run Command Script</strong> blade, paste the script you copied earlier in this task into the <strong>PowerShell Script</strong> pane and click <strong>Run</strong>.</p>
+  </li>
+  <li>
+    <p>Verify that the script completed successfully.</p>
+  </li>
+  <li>
+    <p>Replace the content of the <strong>PowerShell Script</strong> pane with the following script and click <strong>Run</strong>:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock4" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock4" class="mt-0"><code class="language-powershell">New-Item -Type Directory -Path 'Z:\az104-07-folder'
+
+New-Item -Type File -Path 'Z:\az104-07-folder\az-104-07-file.txt'
+</code></pre>
+  </li>
+  <li>
+    <p>Verify that the script completed successfully.</p>
+  </li>
+  <li>
+    <p>Navigate back to the <strong>az104-07-share</strong> file share blade, click <strong>Refresh</strong>, and verify that <strong>az104-07-folder</strong> appears in the list of folders.</p>
+  </li>
+  <li>
+    <p>Click <strong>az104-07-folder</strong> and verify that <strong>az104-07-file.txt</strong> appears in the list of files.</p>
+  </li>
+</ol>
+
+<h2 id="task-6-manage-network-access-for-azure-storage">Task 6: Manage network access for Azure Storage</h2>
+
+<p>In this task, you will configure network access for Azure Storage.</p>
+
+<ol>
+  <li>
+    <p>In the Azure portal, navigate back to the blade of the storage account you created in the first task of this lab and, in the <strong>Security + Networking</strong> section, click <strong>Networking</strong> and then click <strong>Firewalls and virtual networks</strong>.</p>
+  </li>
+  <li>
+    <p>Click the <strong>Enabled from selected virtual networks and IP addresses</strong> option and review the configuration settings that become available once this option is enabled.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: You can use these settings to configure direct connectivity between Azure virtual machines on designated subnets of virtual networks and the storage account by using service endpoints.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Click the checkbox <strong>Add your client IP address</strong> and save the change.</p>
+  </li>
+  <li>
+    <p>Open another browser window by using InPrivate mode and navigate to the blob SAS URL you generated in the previous task.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: If you did not record the SAS URL from task 4, you should generate a new one with the same configuration. Use Task 4 steps 4-6 as a guide for generating a new blob SAS URL.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>You should be presented with the content of <strong>The MIT License (MIT)</strong> page.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: This is expected, since you are connecting from your client IP address.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Close the InPrivate mode browser window, return to the browser window showing the <strong>Networking</strong> blade of the Azure Storage account.</p>
+  </li>
+  <li>
+    <p>In the Azure portal, open the <strong>Azure Cloud Shell</strong> by clicking on the icon in the top right of the Azure Portal.</p>
+  </li>
+  <li>
+    <p>If prompted to select either <strong>Bash</strong> or <strong>PowerShell</strong>, select <strong>PowerShell</strong>.</p>
+  </li>
+  <li>
+    <p>From the Cloud Shell pane, run the following to attempt downloading of the LICENSE blob from the <strong>az104-07-container</strong> container of the storage account (replace the <code>[blob SAS URL]</code> placeholder with the blob SAS URL you generated in the previous task):</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock5" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock5" class="mt-0"><code class="language-powershell">Invoke-WebRequest -URI '[blob SAS URL]'
+</code></pre>
+  </li>
+  <li>
+    <p>Verify that the download attempt failed.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: You should receive the message stating <strong>AuthorizationFailure: This request is not authorized to perform this operation</strong>. This is expected, since you are connecting from the IP address assigned to an Azure VM hosting the Cloud Shell instance.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Close the Cloud Shell pane.</p>
+  </li>
+</ol>
+
+<h2 id="clean-up-resources">Clean up resources</h2>
+
+<blockquote>
+  <p><strong>Note</strong>: Remember to remove any newly created Azure resources that you no longer use. Removing unused resources ensures you will not see unexpected charges.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Note</strong>:  Don’t worry if the lab resources cannot be immediately removed. Sometimes resources have dependencies and take a long time to delete. It is a common Administrator task to monitor resource usage, so just periodically review your resources in the Portal to see how the cleanup is going. You might also try to delete the Resource Group where the resources reside. That is a quick Administrator shortcut. If you have concerns speak to your instructor.</p>
+</blockquote>
+
+<ol>
+  <li>
+    <p>In the Azure portal, open the <strong>PowerShell</strong> session within the <strong>Cloud Shell</strong> pane.</p>
+  </li>
+  <li>
+    <p>List all resource groups created throughout the labs of this module by running the following command:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock6" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock6" class="mt-0"><code class="language-powershell">Get-AzResourceGroup -Name 'az104-07*'
+</code></pre>
+  </li>
+  <li>
+    <p>Delete all resource groups you created throughout the labs of this module by running the following command:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock7" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock7" class="mt-0"><code class="language-powershell">Get-AzResourceGroup -Name 'az104-07*' | Remove-AzResourceGroup -Force -AsJob
+</code></pre>
+
+    <blockquote>
+      <p><strong>Note</strong>: The command executes asynchronously (as determined by the -AsJob parameter), so while you will be able to run another PowerShell command immediately afterwards within the same PowerShell session, it will take a few minutes before the resource groups are actually removed.</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="review">Review</h2>
+
+<p>In this lab, you have:</p>
+
+<ul>
+  <li>Provisioned the lab environment</li>
+  <li>Created and configured Azure Storage accounts</li>
+  <li>Managed blob storage</li>
+  <li>Managed authentication and authorization for Azure Storage</li>
+  <li>Created and configured an Azure Files shares</li>
+  <li>Managed network access for Azure Storage</li>
+</ul>
+
+            </article>
+        </main>
+    </div>
+    <footer class="fixed-bottom d-print-none">
+        <nav class="navbar navbar-light bg-light d-flex justify-content-around">
+            <span class="navbar-text">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <a href="https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator" target="_blank" class="ml-2">
+                    MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator
+                </a>
+            </span>
+        </nav>
+    </footer>
+    <script src="./AZ-104-MicrosoftAzureAdministrator_files/jquery-3.2.1.slim.min.js.download" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="./AZ-104-MicrosoftAzureAdministrator_files/popper.min.js.download" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="./AZ-104-MicrosoftAzureAdministrator_files/bootstrap.min.js.download" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./AZ-104-MicrosoftAzureAdministrator_files/clipboard.min.js.download"></script>
+    <script src="./AZ-104-MicrosoftAzureAdministrator_files/highlight.min.js.download"></script>
+    <script src="./AZ-104-MicrosoftAzureAdministrator_files/script.js.download"></script>
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

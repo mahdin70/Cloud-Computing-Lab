@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<!-- saved from url=(0127)https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_01-Manage_Entra_ID_Identities.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>
+            AZ-104-MicrosoftAzureAdministrator
+        </title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="./Lab 5_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./Lab 5_files/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="./Lab 5_files/vs.min.css">
+        <script src="./Lab 5_files/highlight.min.js.download"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <link rel="stylesheet" href="./Lab 5_files/style.css">
+    </head>
+    <body data-spy="scroll" data-target="#linksMenu" data-new-gr-c-s-check-loaded="14.1138.0" data-gr-ext-installed="">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gray">
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-white" href="https://docs.microsoft.com/training/">
+                <img src="./Lab 5_files/microsoft-gray.png" alt="Microsoft logo" style="width:100px;height:21px;">
+            </a>
+            <span class="my-1 title text-black">Microsoft Learn</span>
+            <span class="ml-2"><a href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator">≡</a></span>
+        </div>
+        <!--
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-azure text-uppercase" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator">
+                AZ-104-MicrosoftAzureAdministrator
+            </a>
+            <a href="https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator" target="_blank" class="btn btn-sm btn-outline-secondary text-light">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <span class="ml-2">GitHub</span>
+            </a>
+        </div>
+        -->
+    </nav>
+    <hr color-"gray"="">
+    <div class="container">
+        <main class="row extra-padding">
+            <aside class="col-sm-2">       
+                <nav id="linksMenu" class="toc sticky-top">
+                    <ul class="nav navbar-nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_01-Manage_Entra_ID_Identities.html#lab-scenario">Lab scenario</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_01-Manage_Entra_ID_Identities.html#objectives">Objectives</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_01-Manage_Entra_ID_Identities.html#estimated-timing-30-minutes">Estimated timing: 30 minutes</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_01-Manage_Entra_ID_Identities.html#architecture-diagram">Architecture diagram</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_01-Manage_Entra_ID_Identities.html#exercise-1">Exercise 1</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_01-Manage_Entra_ID_Identities.html#task-1-create-and-configure--users">Task 1: Create and configure  users</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_01-Manage_Entra_ID_Identities.html#task-2-create-groups-with-assigned-and-dynamic-membership">Task 2: Create groups with assigned and dynamic membership</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_01-Manage_Entra_ID_Identities.html#task-3-create-a-tenant-optional---possible-captcha-issues-paid-subscription-required">Task 3: Create a tenant (Optional - Possible captcha issues, paid subscription required)</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_01-Manage_Entra_ID_Identities.html#task-4-manage-guest-users">Task 4: Manage guest users.</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_01-Manage_Entra_ID_Identities.html#task-5-clean-up-resources">Task 5: Clean up resources</a></li></ul>
+                </nav>         
+            </aside>
+            <hr class="">
+            <article class="col-sm-10 mb-5">
+                <h1 id="lab-01---manage-microsoft-entra-id-identities">Lab 01 - Manage Microsoft Entra ID Identities</h1>
+
+<h1 id="student-lab-manual">Student lab manual</h1>
+
+<h2 id="lab-scenario">Lab scenario</h2>
+
+<p>In order to allow Contoso users to authenticate by using Microsoft Entra ID, you have been tasked with provisioning users and group accounts. Membership of the groups should be updated automatically based on the user job titles. You also need to create a test tenant with a test user account and grant that account limited permissions to resources in the Contoso Azure subscription.</p>
+
+<p><strong>Note:</strong> An <strong><a href="https://mslabs.cloudguides.com/guides/AZ-104%20Exam%20Guide%20-%20Microsoft%20Azure%20Administrator%20Exercise%201">interactive lab simulation</a></strong> is available that allows you to click through this lab at your own pace. You may find slight differences between the interactive simulation and the hosted lab, but the core concepts and ideas being demonstrated are the same.</p>
+
+<h2 id="objectives">Objectives</h2>
+
+<p>In this lab, you will:</p>
+
+<ul>
+  <li>Task 1: Create and configure users</li>
+  <li>Task 2: Create groups with assigned and dynamic membership</li>
+  <li>Task 3: Create a tenant (Optional - lab environment issue)</li>
+  <li>Task 4: Manage guest users (Optional - lab environment issue)</li>
+</ul>
+
+<h2 id="estimated-timing-30-minutes">Estimated timing: 30 minutes</h2>
+
+<h2 id="architecture-diagram">Architecture diagram</h2>
+<p><a href="./Lab 5_files/lab01entra.png" target="_blank"><img src="./Lab 5_files/lab01entra.png" alt="image"></a></p>
+
+<h3 id="instructions">Instructions</h3>
+
+<h2 id="exercise-1">Exercise 1</h2>
+
+<h2 id="task-1-create-and-configure--users">Task 1: Create and configure  users</h2>
+
+<p>In this task, you will create and configure users.</p>
+
+<blockquote>
+  <p><strong>Note</strong>: If you have previously used the Trial license for Microsoft Entra ID on this tenant you will need a new tenant and perform  Task 2 after Task 3 in the new tenant.</p>
+</blockquote>
+
+<ol>
+  <li>
+    <p>Sign in to the <a href="https://portal.azure.com/">Azure portal</a>.</p>
+  </li>
+  <li>
+    <p>In the Azure portal, search for and select <strong>Microsoft Entra ID</strong>.</p>
+  </li>
+  <li>
+    <p>On the Microsoft Entra ID blade, scroll down to the <strong>Manage</strong> section, click <strong>User settings</strong>, and review available configuration options.</p>
+  </li>
+  <li>
+    <p>On the Microsoft Entra ID blade, in the <strong>Manage</strong> section, click <strong>Users</strong>, and then click your user account to display its <strong>Profile</strong> settings.</p>
+  </li>
+  <li>
+    <p>Click <strong>Edit properties</strong>, and then in the <strong>Settings</strong> tab, set <strong>Usage location</strong> to <strong>United States</strong> and click <strong>Save</strong> to apply the change.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: This is necessary in order to assign an Microsoft Entra ID P2 license to your user account later in this lab.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Navigate back to the <strong>Users - All users</strong> blade, and then click <strong>+ New user</strong>.</p>
+  </li>
+  <li>
+    <p>Create a new user with the following settings (leave others with their defaults):</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>User principal name</td>
+          <td><strong>az104-01a-aaduser1</strong></td>
+        </tr>
+        <tr>
+          <td>Display name</td>
+          <td><strong>az104-01a-aaduser1</strong></td>
+        </tr>
+        <tr>
+          <td>Auto-generate password</td>
+          <td>de-select</td>
+        </tr>
+        <tr>
+          <td>Initial password</td>
+          <td><strong>Provide a secure password</strong></td>
+        </tr>
+        <tr>
+          <td>Job title (Properties tab)</td>
+          <td><strong>Cloud Administrator</strong></td>
+        </tr>
+        <tr>
+          <td>Department (Properties tab)</td>
+          <td><strong>IT</strong></td>
+        </tr>
+        <tr>
+          <td>Usage location (Properties tab)</td>
+          <td><strong>United States</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <blockquote>
+      <p><strong>Note</strong>: <strong>Copy to clipboard</strong> the full <strong>User Principal Name</strong> (user name plus domain). You will need it later in this task.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>In the list of users, click the newly created user account to display its blade.</p>
+  </li>
+  <li>
+    <p>Review the options available in the <strong>Manage</strong> section and note that you can identify the roles assigned to the user account as well as the user account’s permissions to Azure resources.</p>
+  </li>
+  <li>
+    <p>In the <strong>Manage</strong> section, click <strong>Assigned roles</strong>, then click <strong>+ Add assignment</strong> button and assign the <strong>User administrator</strong> role to <strong>az104-01a-aaduser1</strong>.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: You also have the option of assigning roles when provisioning a new user.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Open an <strong>InPrivate</strong> browser window and sign in to the <a href="https://portal.azure.com/">Azure portal</a> using the newly created user account. When prompted to update the password, change the password to a secure password of your choosing.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: Rather than typing the user name (including the domain name), you can paste the content of Clipboard.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>In the <strong>InPrivate</strong> browser window, in the Azure portal, search for and select <strong>Microsoft Entra ID</strong>.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: While this user account can access the tenant, it does not have any access to Azure resources. This is expected, since such access would need to be granted explicitly by using Azure Role-Based Access Control.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>In the <strong>InPrivate</strong> browser window, on the Microsoft Entra ID blade, scroll down to the <strong>Manage</strong> section, click <strong>User settings</strong>, and note that you do not have permissions to modify any configuration options.</p>
+  </li>
+  <li>
+    <p>In the <strong>InPrivate</strong> browser window, on the Microsoft Entra ID blade, in the <strong>Manage</strong> section, click <strong>Users</strong>, and then click <strong>+ New user</strong>.</p>
+  </li>
+  <li>
+    <p>Create a new user with the following settings (leave others with their defaults):</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>User principal name</td>
+          <td><strong>az104-01a-aaduser2</strong></td>
+        </tr>
+        <tr>
+          <td>Display name</td>
+          <td><strong>az104-01a-aaduser2</strong></td>
+        </tr>
+        <tr>
+          <td>Auto-generate password</td>
+          <td>de-select</td>
+        </tr>
+        <tr>
+          <td>Initial password</td>
+          <td><strong>Provide a secure password</strong></td>
+        </tr>
+        <tr>
+          <td>Job title</td>
+          <td><strong>System Administrator</strong></td>
+        </tr>
+        <tr>
+          <td>Department</td>
+          <td><strong>IT</strong></td>
+        </tr>
+        <tr>
+          <td>Usage location</td>
+          <td><strong>United States</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Sign out as the az104-01a-aaduser1 user from the Azure portal and close the InPrivate browser window.</p>
+  </li>
+</ol>
+
+<h2 id="task-2-create-groups-with-assigned-and-dynamic-membership">Task 2: Create groups with assigned and dynamic membership</h2>
+
+<p>In this task, you will create groups with assigned and dynamic membership.</p>
+
+<ol>
+  <li>
+    <p>Back in the Azure portal where you are signed in with your <strong>user account</strong>, navigate back to the <strong>Overview</strong> blade of the tenant and, in the <strong>Manage</strong> section, click <strong>Licenses</strong>.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: Microsoft Entra ID Premium P1 or P2 licenses are required in order to implement dynamic groups.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>In the <strong>Manage</strong> section, click <strong>All products</strong>.</p>
+  </li>
+  <li>
+    <p>Click <strong>+ Try/Buy</strong> and activate the free trial of Microsoft Entra ID Premium P2.</p>
+  </li>
+  <li>
+    <p>Refresh the browser window to verify that the activation was successful.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: It can take up to 10 minutes for the licenses to activate. Continue refreshing the page until it appears. Do not proceed until the licenses have been activated.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>From the <strong>Licenses - All products</strong> blade, select the <strong>Microsoft Entra ID P2</strong> entry, and assign all license options to your user account and the two newly created user accounts.</p>
+  </li>
+  <li>
+    <p>In the Azure portal, navigate back to the Microsoft Entra ID tenant blade and click <strong>Groups</strong>.</p>
+  </li>
+  <li>
+    <p>Use the <strong>+ New group</strong> button to create a new group with the following settings:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Group type</td>
+          <td><strong>Security</strong></td>
+        </tr>
+        <tr>
+          <td>Group name</td>
+          <td><strong>IT Cloud Administrators</strong></td>
+        </tr>
+        <tr>
+          <td>Group description</td>
+          <td><strong>Contoso IT cloud administrators</strong></td>
+        </tr>
+        <tr>
+          <td>Membership type</td>
+          <td><strong>Dynamic User</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <blockquote>
+      <p><strong>Note</strong>: If the <strong>Membership type</strong> drop-down list is grayed out, wait a few minutes and refresh the browser page.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Click <strong>Add dynamic query</strong>.</p>
+  </li>
+  <li>
+    <p>On the <strong>Configure Rules</strong> tab of the <strong>Dynamic membership rules</strong> blade, create a new rule with the following settings:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Property</td>
+          <td><strong>jobTitle</strong></td>
+        </tr>
+        <tr>
+          <td>Operator</td>
+          <td><strong>Equals</strong></td>
+        </tr>
+        <tr>
+          <td>Value</td>
+          <td><strong>Cloud Administrator</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Save the rule by clicking <strong>+Add expression</strong> and <strong>Save</strong>. Back on the <strong>New Group</strong> blade, click <strong>Create</strong>.</p>
+  </li>
+  <li>
+    <p>Back on the <strong>Groups - All groups</strong> blade of the tenant, click the <strong>+ New group</strong> button and create a new group with the following settings:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Group type</td>
+          <td><strong>Security</strong></td>
+        </tr>
+        <tr>
+          <td>Group name</td>
+          <td><strong>IT System Administrators</strong></td>
+        </tr>
+        <tr>
+          <td>Group description</td>
+          <td><strong>Contoso IT system administrators</strong></td>
+        </tr>
+        <tr>
+          <td>Membership type</td>
+          <td><strong>Dynamic User</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Click <strong>Add dynamic query</strong>.</p>
+  </li>
+  <li>
+    <p>On the <strong>Configure Rules</strong> tab of the <strong>Dynamic membership rules</strong> blade, create a new rule with the following settings:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Property</td>
+          <td><strong>jobTitle</strong></td>
+        </tr>
+        <tr>
+          <td>Operator</td>
+          <td><strong>Equals</strong></td>
+        </tr>
+        <tr>
+          <td>Value</td>
+          <td><strong>System Administrator</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Save the rule by clicking <strong>+Add expression</strong> and <strong>Save</strong>. Back on the <strong>New Group</strong> blade, click <strong>Create</strong>.</p>
+  </li>
+  <li>
+    <p>Back on the <strong>Groups - All groups</strong> blade of the tenant, click the <strong>+ New group</strong> button, and create a new group with the following settings:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Group type</td>
+          <td><strong>Security</strong></td>
+        </tr>
+        <tr>
+          <td>Group name</td>
+          <td><strong>IT Lab Administrators</strong></td>
+        </tr>
+        <tr>
+          <td>Group description</td>
+          <td><strong>Contoso IT Lab administrators</strong></td>
+        </tr>
+        <tr>
+          <td>Membership type</td>
+          <td><strong>Assigned</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Click <strong>No members selected</strong>.</p>
+  </li>
+  <li>
+    <p>From the <strong>Add members</strong> blade, search and select the <strong>IT Cloud Administrators</strong> and <strong>IT System Administrators</strong> groups and, back on the <strong>New Group</strong> blade, click <strong>Create</strong>.</p>
+  </li>
+  <li>
+    <p>Back on the <strong>Groups - All groups</strong> blade, click the entry representing the <strong>IT Cloud Administrators</strong> group and, on then display its <strong>Members</strong> blade. Verify that the <strong>az104-01a-aaduser1</strong> appears in the list of group members.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: You might experience delays with updates of the dynamic membership groups. To expedite the update, navigate to the group blade, display its <strong>Dynamic membership rules</strong> blade, <strong>Edit</strong> the rule listed in the <strong>Rule syntax</strong> textbox by adding a whitespace at the end, and <strong>Save</strong> the change.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Navigate back to the <strong>Groups - All groups</strong> blade, click the entry representing the <strong>IT System Administrators</strong> group and, on then display its <strong>Members</strong> blade. Verify that the <strong>az104-01a-aaduser2</strong> appears in the list of group members.</p>
+  </li>
+</ol>
+
+<h2 id="task-3-create-a-tenant-optional---possible-captcha-issues-paid-subscription-required">Task 3: Create a tenant (Optional - Possible captcha issues, paid subscription required)</h2>
+
+<p>In this task, you will create a new tenant.</p>
+
+<ol>
+  <li>
+    <p>In the Azure portal, search for and select <strong>Microsoft Entra ID</strong>.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: There is a known issue with the Captcha verification in the lab environment. If you receive the error <strong>Creation failed. Too many requests, please try later</strong>, do the following:</p>
+      <ul>
+        <li>Try the creation a few times.<br></li>
+        <li>Check the <strong>Manage tenant</strong> section to ensure the tenant wasn’t created in the background. <br></li>
+        <li>Open a new <strong>InPrivate</strong> window and using the Azure Portal and try to create the tenant from there.<br>
+  Raise the problem with the trainer, then use the <strong><a href="https://mslabs.cloudguides.com/guides/AZ-104%20Exam%20Guide%20-%20Microsoft%20Azure%20Administrator%20Exercise%201">interactive lab simulation</a></strong> to view the steps. <br></li>
+        <li>You can try this task later, but creating a tenant isn’t required in other labs.</li>
+      </ul>
+    </blockquote>
+  </li>
+  <li>
+    <p>Click <strong>Manage tenants</strong>, and then on the next screen, click <strong>+ Create</strong>, and specify the following setting:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Directory type</td>
+          <td><strong>Microsoft Entra ID</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Click <strong>Next : Configuration</strong></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Organization name</td>
+          <td><strong>Contoso Lab</strong></td>
+        </tr>
+        <tr>
+          <td>Initial domain name</td>
+          <td>any valid DNS name consisting of lower case letters and digits and starting with a letter</td>
+        </tr>
+        <tr>
+          <td>Country/Region</td>
+          <td><strong>United States</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <blockquote>
+      <p><strong>Note</strong>: The <strong>Initial domain name</strong> should not be a legitimate name that potentially matches your organization or another. The green check mark in the <strong>Initial domain name</strong> text box will indicate that the domain name you typed in is valid and unique.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Click <strong>Review + create</strong> and then click <strong>Create</strong>.</p>
+  </li>
+  <li>
+    <p>Display the blade of the newly created tenant by using the <strong>Click here to navigate to your new tenant: Contoso Lab</strong> link or the <strong>Directory + Subscription</strong> button (directly to the right of the Cloud Shell button) in the Azure portal toolbar.</p>
+  </li>
+</ol>
+
+<h2 id="task-4-manage-guest-users">Task 4: Manage guest users.</h2>
+
+<p>In this task, you will create  guest users and grant them access to resources in an Azure subscription.</p>
+
+<ol>
+  <li>
+    <p>In the Azure portal displaying the Contoso Lab tenant, in the <strong>Manage</strong> section, click <strong>Users</strong>, and then click <strong>+ New user</strong>.</p>
+  </li>
+  <li>
+    <p>Create a new user with the following settings (leave others with their defaults):</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>User principal name</td>
+          <td><strong>az104-01b-aaduser1</strong></td>
+        </tr>
+        <tr>
+          <td>Display name</td>
+          <td><strong>az104-01b-aaduser1</strong></td>
+        </tr>
+        <tr>
+          <td>Auto-generate password</td>
+          <td>de-select</td>
+        </tr>
+        <tr>
+          <td>Initial password</td>
+          <td><strong>Provide a secure password</strong></td>
+        </tr>
+        <tr>
+          <td>Job title</td>
+          <td><strong>System Administrator</strong></td>
+        </tr>
+        <tr>
+          <td>Department</td>
+          <td><strong>IT</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Click on the newly created profile.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: <strong>Copy to clipboard</strong> the full <strong>User Principal Name</strong> (user name plus domain). You will need it later in this task.</p>
+    </blockquote>
+  </li>
+  <li>Return to the first tenant that you created earlier.</li>
+  <li>Select <strong>Overview</strong> in the navigation pane.</li>
+  <li>Click <strong>Manage tenants</strong>.</li>
+  <li>
+    <p>Check the box next to the first tenant you created earlier, then select <strong>Switch</strong>.</p>
+  </li>
+  <li>
+    <p>Navigate back to the <strong>Users - All users</strong> blade, and then click <strong>+ Invite external user</strong>.</p>
+  </li>
+  <li>
+    <p>Invite a new guest user with the following settings (leave others with their defaults):</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Email</td>
+          <td>the User Principal Name you copied earlier in this task</td>
+        </tr>
+        <tr>
+          <td>Display Name (Properties tab)</td>
+          <td><strong>az104-01b-aaduser1</strong></td>
+        </tr>
+        <tr>
+          <td>Job title (Properties tab)</td>
+          <td><strong>Lab Administrator</strong></td>
+        </tr>
+        <tr>
+          <td>Department (Properties tab)</td>
+          <td><strong>IT</strong></td>
+        </tr>
+        <tr>
+          <td>Usage location (Properties tab)</td>
+          <td><strong>United States</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Click <strong>Invite</strong>.</p>
+  </li>
+  <li>
+    <p>Back on the <strong>Users - All users</strong> blade, click the entry representing the newly created guest user account.</p>
+  </li>
+  <li>
+    <p>On the <strong>az104-01b-aaduser1 - Profile</strong> blade, click <strong>Groups</strong>.</p>
+  </li>
+  <li>Click <strong>+ Add membership</strong> and add the guest user account to the <strong>IT Lab Administrators</strong> group.</li>
+</ol>
+
+<h2 id="task-5-clean-up-resources">Task 5: Clean up resources</h2>
+
+<blockquote>
+  <p><strong>Note</strong>: Remember to remove any newly created Azure resources that you no longer use. Removing unused resources ensures you will not incur unexpected costs. While, in this case, there are no additional charges associated with tenants and their objects, you might want to consider removing the user accounts, the group accounts, and the tenant you created in this lab.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Note</strong>:  Don’t worry if the lab resources cannot be immediately removed. Sometimes resources have dependencies and take a longer time to delete. It is a common Administrator task to monitor resource usage, so just periodically review your resources in the Portal to see how the cleanup is going.</p>
+</blockquote>
+
+<ol>
+  <li>
+    <p>In the <strong>Azure Portal</strong> search for <strong>Microsoft Entra ID</strong> in the search bar. Under <strong>Manage</strong> select <strong>Licenses</strong>. Once at <strong>Licenses</strong> under <strong>Manage</strong> select <strong>All Products</strong> and then select <strong>Microsoft Entra ID Premium P2</strong> item in the list. Proceed by then selecting <strong>Licensed Users</strong>. Select the user accounts <strong>az104-01a-aaduser1</strong> and <strong>az104-01a-aaduser2</strong> to which you assigned licenses in this lab, click <strong>Remove license</strong>, and, when prompted to confirm, click <strong>Yes</strong>.</p>
+  </li>
+  <li>
+    <p>In the Azure portal, navigate to the <strong>Users - All users</strong> blade, click the entry representing the <strong>az104-01b-aaduser1</strong> guest user account, on the <strong>az104-01b-aaduser1 - Profile</strong> blade click <strong>Delete</strong>, and, when prompted to confirm, click <strong>OK</strong>.</p>
+  </li>
+  <li>
+    <p>Repeat the same sequence of steps to delete the remaining user accounts you created in this lab.</p>
+  </li>
+  <li>
+    <p>Navigate to the <strong>Groups - All groups</strong> blade, select the groups you created in this lab, click <strong>Delete</strong>, and, when prompted to confirm, click <strong>OK</strong>.</p>
+  </li>
+  <li>
+    <p>In the Azure portal, display the blade of the Contoso Lab tenant by using the <strong>Directory + Subscription</strong> button (directly to the right of the Cloud Shell button) in the Azure portal toolbar.</p>
+  </li>
+  <li>
+    <p>Navigate to the <strong>Users - All users</strong> blade, click the entry representing the <strong>az104-01b-aaduser1</strong> user account, on the <strong>az104-01b-aaduser1 - Profile</strong> blade click <strong>Delete</strong>, and, when prompted to confirm, click <strong>OK</strong>.</p>
+  </li>
+  <li>
+    <p>Navigate to the <strong>Contoso Lab - Overview</strong> blade of the Contoso Lab tenant, click <strong>Manage tenants</strong> and then on the next screen, select the box next to <strong>Contoso Lab</strong>, click <strong>Delete</strong>, on the <strong>Delete tenant ‘Contoso Labs’?</strong> blade, click the <strong>Get permission to delete Azure resources</strong> link, on the <strong>Properties</strong> blade, set <strong>Access management for Azure resources</strong> to <strong>Yes</strong> and click <strong>Save</strong>.</p>
+  </li>
+  <li>
+    <p>Navigate back to the <strong>Delete tenant ‘Contoso Lab’</strong> blade and click <strong>Refresh</strong>, click <strong>Delete</strong>.</p>
+  </li>
+</ol>
+
+<blockquote>
+  <p><strong>Note</strong>: If a tenant has a trial license, then you would have to wait for the trial license expiration before you could delete the tenant. This would not incur any additional cost.</p>
+</blockquote>
+
+<h4 id="review">Review</h4>
+
+<p>In this lab, you have:</p>
+
+<ul>
+  <li>Created and configured users</li>
+  <li>Created groups with assigned and dynamic membership</li>
+  <li>Created a tenant</li>
+  <li>Managed guest users</li>
+</ul>
+
+            </article>
+        </main>
+    </div>
+    <footer class="fixed-bottom d-print-none">
+        <nav class="navbar navbar-light bg-light d-flex justify-content-around">
+            <span class="navbar-text">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <a href="https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator" target="_blank" class="ml-2">
+                    MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator
+                </a>
+            </span>
+        </nav>
+    </footer>
+    <script src="./Lab 5_files/jquery-3.2.1.slim.min.js.download" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="./Lab 5_files/popper.min.js.download" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="./Lab 5_files/bootstrap.min.js.download" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./Lab 5_files/clipboard.min.js.download"></script>
+    <script src="./Lab 5_files/highlight.min.js.download"></script>
+    <script src="./Lab 5_files/script.js.download"></script>
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

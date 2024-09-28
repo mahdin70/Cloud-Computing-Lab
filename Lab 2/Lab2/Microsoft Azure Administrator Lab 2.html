@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<!-- saved from url=(0170)https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_04-Implement_Virtual_Networking.html#task-4-configure-network-security-groups -->
+<html lang="en">
+  <head>
+    <style>
+      body {
+        padding-left: 30px;
+      }
+    </style>
+    <!-- <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="./AZ-104-MicrosoftAzureAdministrator Lab 2_files/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="./AZ-104-MicrosoftAzureAdministrator Lab 2_files/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="./AZ-104-MicrosoftAzureAdministrator Lab 2_files/vs.min.css"
+    />
+    <script src="./AZ-104-MicrosoftAzureAdministrator Lab 2_files/highlight.min.js.download"></script>
+-->
+    <link
+      rel="stylesheet"
+      href="./AZ-104-MicrosoftAzureAdministrator Lab 2_files/style.css"
+    />
+  </head>
+  <body
+    data-spy="scroll"
+    data-target="#linksMenu"
+    data-new-gr-c-s-check-loaded="14.1121.0"
+    data-gr-ext-installed=""
+  >
+    <div class="container">
+      <main class="row extra-padding">
+        <hr class="" />
+        <article class="col-sm-10 mb-5">
+          <h1 id="lab-04---implement-virtual-networking">
+            Lab 02 - Implement Virtual Networking
+          </h1>
+
+          <h2 id="lab-scenario">Lab scenario</h2>
+
+          <p>
+            You need to explore Azure virtual networking capabilities. To start,
+            you plan to create a virtual network in Azure that will host a
+            couple of Azure virtual machines. Since you intend to implement
+            network-based segmentation, you will deploy them into different
+            subnets of the virtual network. You also want to make sure that
+            their private and public IP addresses will not change over time. To
+            comply with Contoso security requirements, you need to protect
+            public endpoints of Azure virtual machines accessible from Internet.
+            Finally, you need to implement DNS name resolution for Azure virtual
+            machines both within the virtual network and from Internet.
+          </p>
+
+          <p>
+            <strong>Note:</strong> An
+            <strong
+              ><a
+                href="https://mslabs.cloudguides.com/guides/AZ-104%20Exam%20Guide%20-%20Microsoft%20Azure%20Administrator%20Exercise%208"
+                >interactive lab simulation</a
+              ></strong
+            >
+            is available that allows you to click through this lab at your own
+            pace. You may find slight differences between the interactive
+            simulation and the hosted lab, but the core concepts and ideas being
+            demonstrated are the same.
+          </p>
+
+          <h2 id="objectives">Objectives</h2>
+
+          <p>In this lab, you will:</p>
+
+          <ul>
+            <li>Task 1: Create and configure a virtual network</li>
+            <li>Task 2: Deploy virtual machines into the virtual network</li>
+            <li>
+              Task 3: Configure private and public IP addresses of Azure VMs
+            </li>
+            <li>Task 4: Configure network security groups</li>
+            <li>Task 5: Configure Azure DNS for internal name resolution</li>
+            <li>Task 6: Configure Azure DNS for external name resolution</li>
+          </ul>
+
+          <h2 id="estimated-timing-40-minutes">Estimated timing: 40 minutes</h2>
+
+          <h2 id="architecture-diagram">Architecture diagram</h2>
+
+          <p>
+            <a
+              href="./AZ-104-MicrosoftAzureAdministrator Lab 2_files/lab04.png"
+              target="_blank"
+              ><img
+                src="./AZ-104-MicrosoftAzureAdministrator Lab 2_files/lab04.png"
+                alt="image"
+            /></a>
+          </p>
+
+          <h3 id="instructions">Instructions</h3>
+
+          <h2 id="exercise-1">Exercise 1</h2>
+
+          <h2 id="task-1-create-and-configure-a-virtual-network">
+            Task 1: Create and configure a virtual network
+          </h2>
+
+          <p>
+            In this task, you will create a virtual network with multiple
+            subnets by using the Azure portal
+          </p>
+
+          <ol>
+            <li>
+              <p>
+                Sign in to the
+                <a href="https://portal.azure.com/">Azure portal</a>.
+              </p>
+            </li>
+            <li>
+              <p>
+                In the Azure portal, search for and select
+                <strong>Virtual networks</strong>, and, on the
+                <strong>Virtual networks</strong> blade, click
+                <strong>+ Create</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Create a virtual network with the following settings (leave
+                others with their default values):
+              </p>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Setting</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Subscription</td>
+                    <td>
+                      the name of the Azure subscription you will be using in
+                      this lab
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Resource Group</td>
+                    <td>
+                      the name of a <strong>new</strong> resource group
+                      <strong>az104-04-rg1</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Name</td>
+                    <td><strong>az104-04-vnet1</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Region</td>
+                    <td>
+                      the name of any Azure region available in the subscription
+                      you will use in this lab
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li>
+              <p>
+                Click <strong>Next : IP Addresses</strong>. The
+                <strong>Starting address</strong> is <strong>10.40.0.0</strong>.
+                The <strong>Address space size</strong> is <strong>/20</strong>.
+                Be sure to click <strong>Add</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Click <strong>+ Add subnet</strong> enter the following values
+                then click <strong>Add</strong>.
+              </p>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Setting</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Subnet name</td>
+                    <td><strong>subnet0</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Starting address</td>
+                    <td><strong>10.40.0.0</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Subnet size</td>
+                    <td><strong>/24 (256 addresses)</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li>
+              <p>
+                Accept the defaults and click
+                <strong>Review and Create</strong>. Let validation occur, and
+                hit <strong>Create</strong> again to submit your deployment.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note:</strong> Wait for the virtual network to be
+                  provisioned. This should take less than a minute.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              <p>Click on <strong>Go to resource</strong></p>
+            </li>
+            <li>
+              <p>
+                On the <strong>az104-04-vnet1</strong> virtual network blade,
+                click <strong>Subnets</strong> and then click
+                <strong>+ Subnet</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Create a subnet with the following settings (leave others with
+                their default values):
+              </p>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Setting</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Name</td>
+                    <td><strong>subnet1</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Address range (CIDR block)</td>
+                    <td><strong>10.40.1.0/24</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Network security group</td>
+                    <td><strong>None</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Route table</td>
+                    <td><strong>None</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li>
+              <p>Click <strong>Save</strong></p>
+            </li>
+          </ol>
+
+          <h2 id="task-2-deploy-virtual-machines-into-the-virtual-network">
+            Task 2: Deploy virtual machines into the virtual network
+          </h2>
+
+          <p>
+            In this task, you will deploy Azure virtual machines into different
+            subnets of the virtual network by using an ARM template
+          </p>
+
+          <ol>
+            <li>
+              <p>
+                In the Azure portal, open the
+                <strong>Azure Cloud Shell</strong> by clicking on the icon in
+                the top right of the Azure Portal.
+              </p>
+            </li>
+            <li>
+              <p>
+                If prompted to select either <strong>Bash</strong> or
+                <strong>PowerShell</strong>, select <strong>PowerShell</strong>.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: If this is the first time you are
+                  starting <strong>Cloud Shell</strong> and you are presented
+                  with the <strong>You have no storage mounted</strong> message,
+                  select the subscription you are using in this lab, and click
+                  <strong>Create storage</strong>.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              <p>
+                In the toolbar of the Cloud Shell pane, click the
+                <strong>Upload/Download files</strong> icon, in the drop-down
+                menu, click <strong>Upload</strong>. Upload
+                <strong
+                  >\Allfiles\Labs\04\az104-04-vms-loop-template.json</strong
+                >
+                and
+                <strong
+                  >\Allfiles\Labs\04\az104-04-vms-loop-parameters.json</strong
+                >
+                into the Cloud Shell home directory.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: You must upload each file separately.
+                  After uploading, use <strong>dir</strong> to ensure both files
+                  were successfully uploaded.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              From the Cloud Shell pane, run the following to deploy two virtual
+              machines by using the template and parameter files:
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: You will be prompted to provide an
+                  Admin password.
+                </p>
+              </blockquote>
+
+              <div
+                class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"
+              >
+                <span class="mx-2 text-muted text-capitalize font-weight-light"
+                  >code</span
+                ><button
+                  class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light"
+                  data-clipboard-target="#codeBlock0"
+                  type="button"
+                >
+                  <i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy
+                </button>
+              </div>
+              <pre
+                id="codeBlock0"
+                class="mt-0"
+              ><code class="language-powershell">$rgName = 'az104-04-rg1'
+
+New-AzResourceGroupDeployment `
+   -ResourceGroupName $rgName `
+   -TemplateFile $HOME/az104-04-vms-loop-template.json `
+   -TemplateParameterFile $HOME/az104-04-vms-loop-parameters.json
+</code></pre>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: This method of deploying ARM templates
+                  uses Azure PowerShell. You can perform the same task by
+                  running the equivalent Azure CLI command
+                  <strong>az deployment create</strong> (for more information,
+                  refer to
+                  <a
+                    href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-cli"
+                    >Deploy resources with Resource Manager templates and Azure
+                    CLI</a
+                  >.
+                </p>
+              </blockquote>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: Wait for the deployment to complete
+                  before proceeding to the next task. This should take about 2
+                  minutes.
+                </p>
+              </blockquote>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: If you got an error stating the VM size
+                  is not available please ask your instructor for assistance and
+                  try these steps:
+                </p>
+                <ol>
+                  <li>
+                    Click on the <code>{}</code> button in your CloudShell,
+                    select the
+                    <strong>az104-04-vms-loop-parameters.json</strong> from the
+                    left hand side bar and take a note of the
+                    <code>vmSize</code> parameter value.
+                  </li>
+                  <li>
+                    Check the location in which the ‘az104-04-rg1’ resource
+                    group is deployed. You can run
+                    <code>az group show -n az104-04-rg1 --query location</code>
+                    in your CloudShell to get it.
+                  </li>
+                  <li>
+                    Run
+                    <code
+                      >az vm list-skus --location &lt;Replace with your
+                      location&gt; -o table --query "[?
+                      contains(name,'Standard_D2s')].name"</code
+                    >
+                    in your CloudShell. If there are no listed SKUs (i.e. there
+                    are no results), then you cannot deploy any D2S virtual
+                    machines in that region. You will need to find a region that
+                    will allow you to deploy D2S virtual machines. Once you have
+                    chosen a suitable location, delete the AZ104-04-rg1 resource
+                    group and restart the lab.
+                  </li>
+                  <li>
+                    Replace the value of <code>vmSize</code> parameter with one
+                    of the values returned by the command you just run.
+                  </li>
+                  <li>
+                    Now redeploy your templates by running the
+                    <code>New-AzResourceGroupDeployment</code> command again.
+                    You can press the up button a few times which would bring
+                    the last executed command.
+                  </li>
+                </ol>
+              </blockquote>
+            </li>
+            <li>Close the Cloud Shell pane.</li>
+          </ol>
+
+          <h4
+            id="task-3-configure-private-and-public-ip-addresses-of-azure-vms"
+          >
+            Task 3: Configure private and public IP addresses of Azure VMs
+          </h4>
+
+          <p>
+            In this task, you will configure static assignment of public and
+            private IP addresses assigned to network interfaces of Azure virtual
+            machines.
+          </p>
+
+          <blockquote>
+            <p>
+              <strong>Note</strong>: Private and public IP addresses are
+              actually assigned to the network interfaces, which, in turn are
+              attached to Azure virtual machines, however, it is fairly common
+              to refer to IP addresses assigned to Azure VMs instead.
+            </p>
+          </blockquote>
+
+          <blockquote>
+            <p>
+              <strong>Note</strong>: You will need <strong>two</strong> public
+              IP addresses to complete this lab.
+            </p>
+          </blockquote>
+
+          <ol>
+            <li>
+              <p>
+                In the Azure portal, search for and select
+                <strong>Public IP addresses</strong>, then select
+                <strong>+ Create</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Ensure the <strong>resource group</strong> is
+                <strong>az104-04-rg1</strong>,
+              </p>
+            </li>
+            <li>
+              <p>
+                In the <strong>Configuration Details</strong> ensure the
+                <strong>name</strong> is <strong>az104-04-pip0</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Select <strong>Review and create</strong> and then
+                <strong>Create</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                In the Azure portal, search for and select
+                <strong>Public IP addresses</strong>, then select
+                <strong>+ Create</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Ensure the <strong>resource group</strong> is
+                <strong>az104-04-rg1</strong>,
+              </p>
+            </li>
+            <li>
+              <p>
+                In the <strong>Configuration Details</strong> ensure the
+                <strong>name</strong> is <strong>az104-04-pip1</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Select <strong>Review and create</strong> and then
+                <strong>Create</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                In the Azure portal, search for and select
+                <strong>Resource groups</strong>, and, on the
+                <strong>Resource groups</strong> blade, click
+                <strong>az104-04-rg1</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                On the <strong>az104-04-rg1</strong> resource group blade, in
+                the list of its resources, click
+                <strong>az104-04-vnet1</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                On the <strong>az104-04-vnet1</strong> virtual network blade,
+                review the <strong>Connected devices</strong> section and verify
+                that there are two network interfaces
+                <strong>az104-04-nic0</strong> and
+                <strong>az104-04-nic1</strong> attached to the virtual network.
+              </p>
+            </li>
+            <li>
+              <p>
+                Click <strong>az104-04-nic0</strong> and, on the
+                <strong>az104-04-nic0</strong> blade, click
+                <strong>IP configurations</strong>.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: Verify that
+                  <strong>ipconfig1</strong> is currently set up with a dynamic
+                  private IP address.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              <p>
+                In the list IP configurations, click <strong>ipconfig1</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Ensure the <strong>Allocation</strong> is
+                <strong>Static</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Select <strong>Associate public IP address</strong> and in the
+                <strong>Public IP address</strong> drop-down select
+                <strong>az104-04-pip0</strong>.
+              </p>
+            </li>
+            <li>
+              <p>Select <strong>Save</strong>.</p>
+            </li>
+            <li>
+              <p>Navigate back to the <strong>az104-04-vnet1</strong> blade.</p>
+            </li>
+            <li>
+              <p>
+                Click <strong>az104-04-nic1</strong> and, on the
+                <strong>az104-04-nic1</strong> blade, click
+                <strong>IP configurations</strong>.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: Verify that
+                  <strong>ipconfig1</strong> is currently set up with a dynamic
+                  private IP address.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              <p>
+                In the list IP configurations, click <strong>ipconfig1</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Ensure the <strong>Allocation</strong> is
+                <strong>Static</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Select <strong>Associate public IP address</strong> and in the
+                <strong>Public IP address</strong> drop-down select
+                <strong>az104-04-pip1</strong>.
+              </p>
+            </li>
+            <li>
+              <p>Select <strong>Save</strong>.</p>
+            </li>
+            <li>
+              <p>
+                Navigate back to the <strong>az104-04-rg1</strong> resource
+                group blade, in the list of its resources, click
+                <strong>az104-04-vm0</strong>, and from the
+                <strong>az104-04-vm0</strong> virtual machine blade, note the
+                public IP address entry.
+              </p>
+            </li>
+            <li>
+              <p>
+                Navigate back to the <strong>az104-04-rg1</strong> resource
+                group blade, in the list of its resources, click
+                <strong>az104-04-vm1</strong>, and from the
+                <strong>az104-04-vm1</strong> virtual machine blade, note the
+                public IP address entry.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: You will need both IP addresses in the
+                  last task of this lab.
+                </p>
+              </blockquote>
+            </li>
+          </ol>
+
+          <h2 id="task-4-configure-network-security-groups">
+            Task 4: Configure network security groups
+          </h2>
+
+          <p>
+            In this task, you will configure network security groups in order to
+            allow for restricted connectivity to Azure virtual machines.
+          </p>
+
+          <ol>
+            <li>
+              <p>
+                In the Azure portal, navigate back to the
+                <strong>az104-04-rg1</strong> resource group blade, and in the
+                list of its resources, click <strong>az104-04-vm0</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                On the <strong>az104-04-vm0</strong> overview blade, click
+                <strong>Connect</strong>, click <strong>RDP</strong> in the
+                drop-down menu, on the <strong>Connect with RDP</strong> blade,
+                click <strong>Download RDP File</strong> using the Public IP
+                address and follow the prompts to start the Remote Desktop
+                session.
+              </p>
+            </li>
+            <li>
+              <p>Note that the connection attempt fails.</p>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: This is expected, because public IP
+                  addresses of the Standard SKU, by default, require that the
+                  network interfaces to which they are assigned are protected by
+                  a network security group. In order to allow Remote Desktop
+                  connections, you will create a network security group
+                  explicitly allowing inbound RDP traffic from Internet and
+                  assign it to network interfaces of both virtual machines.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              <p>
+                Stop the <strong>az104-04-vm0</strong> and
+                <strong>az104-04-vm1</strong> virtual machines.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: This is done for lab expediency. If the
+                  virtual machines are running when a network security group is
+                  attached to their network interface, it can can take over 30
+                  minutes for the attachment to take effect. Once the network
+                  security group has been created and attached, the virtual
+                  machines will be restarted, and the attachment will be in
+                  effect immediately.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              <p>
+                In the Azure portal, search for and select
+                <strong>Network security groups</strong>, and, on the
+                <strong>Network security groups</strong> blade, click
+                <strong>+ Create</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Create a network security group with the following settings
+                (leave others with their default values):
+              </p>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Setting</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Subscription</td>
+                    <td>
+                      the name of the Azure subscription you are using in this
+                      lab
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Resource Group</td>
+                    <td><strong>az104-04-rg1</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Name</td>
+                    <td><strong>az104-04-nsg01</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Region</td>
+                    <td>
+                      the name of the Azure region where you deployed all other
+                      resources in this lab
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li>
+              <p>
+                Click <strong>Review and Create</strong>. Let validation occur,
+                and hit <strong>Create</strong> to submit your deployment.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: Wait for the deployment to complete.
+                  This should take about 2 minutes.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              <p>
+                On the deployment blade, click
+                <strong>Go to resource</strong> to open the
+                <strong>az104-04-nsg01</strong> network security group blade.
+              </p>
+            </li>
+            <li>
+              <p>
+                On the <strong>az104-04-nsg01</strong> network security group
+                blade, in the <strong>Settings</strong> section, click
+                <strong>Inbound security rules</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Add an inbound rule with the following settings (leave others
+                with their default values):
+              </p>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Setting</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Source</td>
+                    <td><strong>Any</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Source port ranges</td>
+                    <td>*</td>
+                  </tr>
+                  <tr>
+                    <td>Destination</td>
+                    <td><strong>Any</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Service</td>
+                    <td><strong>RDP</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Action</td>
+                    <td><strong>Allow</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Priority</td>
+                    <td><strong>300</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Name</td>
+                    <td><strong>AllowRDPInBound</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li>
+              <p>
+                On the <strong>az104-04-nsg01</strong> network security group
+                blade, in the <strong>Settings</strong> section, click
+                <strong>Network interfaces</strong> and then click
+                <strong>+ Associate</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Associate the <strong>az104-04-nsg01</strong> network security
+                group with the <strong>az104-04-nic0</strong> and
+                <strong>az104-04-nic1</strong> network interfaces.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: It may take up to 5 minutes for the
+                  rules from the newly created Network Security Group to be
+                  applied to the Network Interface Card.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              <p>
+                Start the <strong>az104-04-vm0</strong> and
+                <strong>az104-04-vm1</strong> virtual machines.
+              </p>
+            </li>
+            <li>
+              <p>
+                Navigate back to the <strong>az104-04-vm0</strong> virtual
+                machine blade.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: In the subsequent steps, you will
+                  verify that you can successfully connect to the target virtual
+                  machine.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              <p>
+                On the <strong>az104-04-vm0</strong> blade, click
+                <strong>Connect</strong>, click <strong>RDP</strong>, on the
+                <strong>Connect with RDP</strong> blade, click
+                <strong>Download RDP File</strong> using the Public IP address
+                and follow the prompts to start the Remote Desktop session.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: This step refers to connecting via
+                  Remote Desktop from a Windows computer. On a Mac, you can use
+                  Remote Desktop Client from the Mac App Store and on Linux
+                  computers you can use an open source RDP client software.
+                </p>
+              </blockquote>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: You can ignore any warning prompts when
+                  connecting to the target virtual machines.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              <p>
+                When prompted, sign in with the user and password in the
+                parameters file.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: Leave the Remote Desktop session open.
+                  You will need it in the next task.
+                </p>
+              </blockquote>
+            </li>
+          </ol>
+
+          <h4 id="task-5-configure-azure-dns-for-internal-name-resolution">
+            Task 5: Configure Azure DNS for internal name resolution
+          </h4>
+
+          <p>
+            In this task, you will configure DNS name resolution within a
+            virtual network by using Azure private DNS zones.
+          </p>
+
+          <ol>
+            <li>
+              <p>
+                In the Azure portal, search for and select
+                <strong>Private DNS zones</strong> and, on the
+                <strong>Private DNS zones</strong> blade, click
+                <strong>+ Create</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Create a private DNS zone with the following settings (leave
+                others with their default values):
+              </p>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Setting</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Subscription</td>
+                    <td>
+                      the name of the Azure subscription you are using in this
+                      lab
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Resource Group</td>
+                    <td><strong>az104-04-rg1</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Name</td>
+                    <td><strong>contoso.org</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li>
+              <p>
+                Click <strong>Review and Create</strong>. Let validation occur,
+                and hit <strong>Create</strong> again to submit your deployment.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: Wait for the private DNS zone to be
+                  created. This should take about 2 minutes.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              <p>
+                Click <strong>Go to resource</strong> to open the
+                <strong>contoso.org</strong> DNS private zone blade.
+              </p>
+            </li>
+            <li>
+              <p>
+                On the <strong>contoso.org</strong> private DNS zone blade, in
+                the <strong>Settings</strong> section, click
+                <strong>Virtual network links</strong>
+              </p>
+            </li>
+            <li>
+              <p>
+                Click <strong>+ Add</strong> to create a virtual network link
+                with the following settings (leave others with their default
+                values):
+              </p>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Setting</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Link name</td>
+                    <td><strong>az104-04-vnet1-link</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Subscription</td>
+                    <td>
+                      the name of the Azure subscription you are using in this
+                      lab
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Virtual network</td>
+                    <td><strong>az104-04-vnet1</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Enable auto registration</td>
+                    <td>enabled</td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li>
+              <p>Click <strong>OK</strong>.</p>
+
+              <blockquote>
+                <p>
+                  <strong>Note:</strong> Wait for the virtual network link to be
+                  created. This should take less than 1 minute.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              <p>
+                On the <strong>contoso.org</strong> private DNS zone blade, in
+                the sidebar, click <strong>Overview</strong>
+              </p>
+            </li>
+            <li>
+              <p>
+                Verify that the DNS records for
+                <strong>az104-04-vm0</strong> and
+                <strong>az104-04-vm1</strong> appear in the list of record sets
+                as <strong>Auto registered</strong>.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note:</strong> You might need to wait a few minutes
+                  and refresh the page if the record sets are not listed.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              <p>
+                Switch to the Remote Desktop session to
+                <strong>az104-04-vm0</strong>, right-click the
+                <strong>Start</strong> button and, in the right-click menu,
+                click <strong>Windows PowerShell (Admin)</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                In the Windows PowerShell console window, run the following to
+                test internal name resolution in the newly created private DNS
+                zone:
+              </p>
+
+              <div
+                class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"
+              >
+                <span class="mx-2 text-muted text-capitalize font-weight-light"
+                  >code</span
+                ><button
+                  class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light"
+                  data-clipboard-target="#codeBlock1"
+                  type="button"
+                >
+                  <i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy
+                </button>
+              </div>
+              <pre
+                id="codeBlock1"
+                class="mt-0"
+              ><code class="language-powershell">nslookup az104-04-vm0.contoso.org
+nslookup az104-04-vm1.contoso.org
+</code></pre>
+            </li>
+            <li>
+              <p>
+                Verify that the output of the command includes the private IP
+                address of
+                <strong>az104-04-vm1</strong> (<strong>10.40.1.4</strong>).
+              </p>
+            </li>
+          </ol>
+
+          <h2 id="task-6-configure-azure-dns-for-external-name-resolution">
+            Task 6: Configure Azure DNS for external name resolution
+          </h2>
+
+          <p>
+            In this task, you will configure external DNS name resolution by
+            using Azure public DNS zones.
+          </p>
+
+          <ol>
+            <li>
+              <p>
+                In a web browser, open a new tab and navigate to
+                <a href="https://www.godaddy.com/domains/domain-name-search"
+                  >https://www.godaddy.com/domains/domain-name-search</a
+                >.
+              </p>
+            </li>
+            <li>
+              <p>
+                Use the domain name search to identify a domain name which is
+                not in use.
+              </p>
+            </li>
+            <li>
+              <p>
+                In the Azure portal, search for and select
+                <strong>DNS zones</strong> and, on the
+                <strong>DNS zones</strong> blade, click
+                <strong>+ Create</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Create a DNS zone with the following settings (leave others with
+                their default values):
+              </p>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Setting</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Subscription</td>
+                    <td>
+                      the name of the Azure subscription you are using in this
+                      lab
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Resource Group</td>
+                    <td><strong>az104-04-rg1</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Name</td>
+                    <td>
+                      the DNS domain name you identified earlier in this task
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li>
+              <p>
+                Click <strong>Review and Create</strong>. Let validation occur,
+                and hit <strong>Create</strong> again to submit your deployment.
+              </p>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: Wait for the DNS zone to be created.
+                  This should take about 2 minutes.
+                </p>
+              </blockquote>
+            </li>
+            <li>
+              <p>
+                Click <strong>Go to resource</strong> to open the blade of the
+                newly created DNS zone.
+              </p>
+            </li>
+            <li>
+              <p>On the DNS zone blade, click <strong>+ Record set</strong>.</p>
+            </li>
+            <li>
+              <p>
+                Add a record set with the following settings (leave others with
+                their default values):
+              </p>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Setting</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Name</td>
+                    <td><strong>az104-04-vm0</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Type</td>
+                    <td><strong>A</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Alias record set</td>
+                    <td><strong>No</strong></td>
+                  </tr>
+                  <tr>
+                    <td>TTL</td>
+                    <td><strong>1</strong></td>
+                  </tr>
+                  <tr>
+                    <td>TTL unit</td>
+                    <td><strong>Hours</strong></td>
+                  </tr>
+                  <tr>
+                    <td>IP address</td>
+                    <td>
+                      the public IP address of
+                      <strong>az104-04-vm0</strong> which you identified in the
+                      third exercise of this lab
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li>
+              <p>Click <strong>OK</strong></p>
+            </li>
+            <li>
+              <p>On the DNS zone blade, click <strong>+ Record set</strong>.</p>
+            </li>
+            <li>
+              <p>
+                Add a record set with the following settings (leave others with
+                their default values):
+              </p>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Setting</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Name</td>
+                    <td><strong>az104-04-vm1</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Type</td>
+                    <td><strong>A</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Alias record set</td>
+                    <td><strong>No</strong></td>
+                  </tr>
+                  <tr>
+                    <td>TTL</td>
+                    <td><strong>1</strong></td>
+                  </tr>
+                  <tr>
+                    <td>TTL unit</td>
+                    <td><strong>Hours</strong></td>
+                  </tr>
+                  <tr>
+                    <td>IP address</td>
+                    <td>
+                      the public IP address of
+                      <strong>az104-04-vm1</strong> which you identified in the
+                      third exercise of this lab
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li>
+              <p>Click <strong>OK</strong></p>
+            </li>
+            <li>
+              <p>
+                On the DNS zone blade, note the name of the
+                <strong>Name server 1</strong> entry.
+              </p>
+            </li>
+            <li>
+              <p>
+                In the Azure portal, open the
+                <strong>PowerShell</strong> session in
+                <strong>Cloud Shell</strong> by clicking on the icon in the top
+                right of the Azure Portal.
+              </p>
+            </li>
+            <li>
+              <p>
+                From the Cloud Shell pane, run the following to test external
+                name resolution of the <strong>az104-04-vm0</strong> DNS record
+                set in the newly created DNS zone (replace the placeholder
+                <code>[Name server 1]</code> with the name of
+                <strong>Name server 1</strong> you noted earlier in this task
+                and the <code>[domain name]</code> placeholder with the name of
+                the DNS domain you created earlier in this task):
+              </p>
+
+              <div
+                class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"
+              >
+                <span class="mx-2 text-muted text-capitalize font-weight-light"
+                  >code</span
+                ><button
+                  class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light"
+                  data-clipboard-target="#codeBlock2"
+                  type="button"
+                >
+                  <i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy
+                </button>
+              </div>
+              <pre
+                id="codeBlock2"
+                class="mt-0"
+              ><code class="language-powershell">nslookup az104-04-vm0.[domain name] [Name server 1]
+</code></pre>
+            </li>
+            <li>
+              <p>
+                Verify that the output of the command includes the public IP
+                address of <strong>az104-04-vm0</strong>.
+              </p>
+            </li>
+            <li>
+              <p>
+                From the Cloud Shell pane, run the following to test external
+                name resolution of the <strong>az104-04-vm1</strong> DNS record
+                set in the newly created DNS zone (replace the placeholder
+                <code>[Name server 1]</code> with the name of
+                <strong>Name server 1</strong> you noted earlier in this task
+                and the <code>[domain name]</code> placeholder with the name of
+                the DNS domain you created earlier in this task):
+              </p>
+
+              <div
+                class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"
+              >
+                <span class="mx-2 text-muted text-capitalize font-weight-light"
+                  >code</span
+                ><button
+                  class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light"
+                  data-clipboard-target="#codeBlock3"
+                  type="button"
+                >
+                  <i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy
+                </button>
+              </div>
+              <pre
+                id="codeBlock3"
+                class="mt-0"
+              ><code class="language-powershell">nslookup az104-04-vm1.[domain name] [Name server 1]
+</code></pre>
+            </li>
+            <li>
+              <p>
+                Verify that the output of the command includes the public IP
+                address of <strong>az104-04-vm1</strong>.
+              </p>
+            </li>
+          </ol>
+
+          <h2 id="clean-up-resources">Clean up resources</h2>
+
+          <blockquote>
+            <p>
+              <strong>Note</strong>: Remember to remove any newly created Azure
+              resources that you no longer use. Removing unused resources
+              ensures you will not see unexpected charges.
+            </p>
+          </blockquote>
+
+          <blockquote>
+            <p>
+              <strong>Note</strong>: Don’t worry if the lab resources cannot be
+              immediately removed. Sometimes resources have dependencies and
+              take a longer time to delete. It is a common Administrator task to
+              monitor resource usage, so just periodically review your resources
+              in the Portal to see how the cleanup is going.
+            </p>
+          </blockquote>
+
+          <ol>
+            <li>
+              <p>
+                In the Azure portal, open the
+                <strong>PowerShell</strong> session within the
+                <strong>Cloud Shell</strong> pane.
+              </p>
+            </li>
+            <li>
+              <p>
+                List all resource groups created throughout the labs of this
+                module by running the following command:
+              </p>
+
+              <div
+                class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"
+              >
+                <span class="mx-2 text-muted text-capitalize font-weight-light"
+                  >code</span
+                ><button
+                  class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light"
+                  data-clipboard-target="#codeBlock4"
+                  type="button"
+                >
+                  <i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy
+                </button>
+              </div>
+              <pre
+                id="codeBlock4"
+                class="mt-0"
+              ><code class="language-powershell">Get-AzResourceGroup -Name 'az104-04*'
+</code></pre>
+            </li>
+            <li>
+              <p>
+                Delete all resource groups you created throughout the labs of
+                this module by running the following command:
+              </p>
+
+              <div
+                class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"
+              >
+                <span class="mx-2 text-muted text-capitalize font-weight-light"
+                  >code</span
+                ><button
+                  class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light"
+                  data-clipboard-target="#codeBlock5"
+                  type="button"
+                >
+                  <i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy
+                </button>
+              </div>
+              <pre
+                id="codeBlock5"
+                class="mt-0"
+              ><code class="language-powershell">Get-AzResourceGroup -Name 'az104-04*' | Remove-AzResourceGroup -Force -AsJob
+</code></pre>
+
+              <blockquote>
+                <p>
+                  <strong>Note</strong>: The command executes asynchronously (as
+                  determined by the -AsJob parameter), so while you will be able
+                  to run another PowerShell command immediately afterwards
+                  within the same PowerShell session, it will take a few minutes
+                  before the resource groups are actually removed.
+                </p>
+              </blockquote>
+            </li>
+          </ol>
+
+          <h2 id="review">Review</h2>
+
+          <p>In this lab, you have:</p>
+
+          <ul>
+            <li>Created and configured a virtual network</li>
+            <li>Deployed virtual machines into the virtual network</li>
+            <li>Configured private and public IP addresses of Azure VMs</li>
+            <li>Configured network security groups</li>
+            <li>Configured Azure DNS for internal name resolution</li>
+            <li>Configured Azure DNS for external name resolution</li>
+          </ul>
+        </article>
+      </main>
+    </div>
+    <footer class="fixed-bottom d-print-none">
+      <nav class="navbar navbar-light bg-light d-flex justify-content-around">
+        <span class="navbar-text">
+          <i class="fa fa-github" aria-hidden="true"></i>
+          <a
+            href="https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator"
+            target="_blank"
+            class="ml-2"
+          >
+            MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator
+          </a>
+        </span>
+      </nav>
+    </footer>
+    <script
+      src="./AZ-104-MicrosoftAzureAdministrator Lab 2_files/jquery-3.2.1.slim.min.js.download"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="./AZ-104-MicrosoftAzureAdministrator Lab 2_files/popper.min.js.download"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="./AZ-104-MicrosoftAzureAdministrator Lab 2_files/bootstrap.min.js.download"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./AZ-104-MicrosoftAzureAdministrator Lab 2_files/clipboard.min.js.download"></script>
+    <script src="./AZ-104-MicrosoftAzureAdministrator Lab 2_files/highlight.min.js.download"></script>
+    <script src="./AZ-104-MicrosoftAzureAdministrator Lab 2_files/script.js.download"></script>
+  </body>
+  <grammarly-desktop-integration data-grammarly-shadow-root="true"
+    ><template shadowrootmode="open"
+      ><style>
+        div.grammarly-desktop-integration {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+          -moz-user-select: none;
+          -webkit-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+
+        div.grammarly-desktop-integration:before {
+          content: attr(data-content);
+        }
+      </style>
+      <div
+        aria-label="grammarly-integration"
+        role="group"
+        tabindex="-1"
+        class="grammarly-desktop-integration"
+        data-content='{"mode":"full","isActive":true,"isUserDisabled":false}'
+      ></div></template
+  ></grammarly-desktop-integration>
+</html>

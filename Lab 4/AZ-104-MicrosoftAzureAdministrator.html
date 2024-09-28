@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<!-- saved from url=(0120)https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_09a-Implement_Web_Apps.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>
+            AZ-104-MicrosoftAzureAdministrator
+        </title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="./AZ-104-MicrosoftAzureAdministrator_files/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="./AZ-104-MicrosoftAzureAdministrator_files/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="./AZ-104-MicrosoftAzureAdministrator_files/vs.min.css">
+        <script src="./AZ-104-MicrosoftAzureAdministrator_files/highlight.min.js.download"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <link rel="stylesheet" href="./AZ-104-MicrosoftAzureAdministrator_files/style.css">
+    </head>
+    <body data-spy="scroll" data-target="#linksMenu" data-new-gr-c-s-check-loaded="14.1131.0" data-gr-ext-installed="">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gray">
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-white" href="https://docs.microsoft.com/training/">
+                <img src="./AZ-104-MicrosoftAzureAdministrator_files/microsoft-gray.png" alt="Microsoft logo" style="width:100px;height:21px;">
+            </a>
+            <span class="my-1 title text-black">Microsoft Learn</span>
+            <span class="ml-2"><a href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator">≡</a></span>
+        </div>
+        <!--
+        <div class="container d-flex justify-content-between">
+            <a class="my-1 title text-azure text-uppercase" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator">
+                AZ-104-MicrosoftAzureAdministrator
+            </a>
+            <a href="https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator" target="_blank" class="btn btn-sm btn-outline-secondary text-light">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <span class="ml-2">GitHub</span>
+            </a>
+        </div>
+        -->
+    </nav>
+    <hr color-"gray"="">
+    <div class="container">
+        <main class="row extra-padding">
+            <aside class="col-sm-2">       
+                <nav id="linksMenu" class="toc sticky-top">
+                    <ul class="nav navbar-nav flex-column">
+                    <li class="nav-item"><a class="nav-link active" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_09a-Implement_Web_Apps.html#lab-scenario">Lab scenario</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_09a-Implement_Web_Apps.html#objectives">Objectives</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_09a-Implement_Web_Apps.html#estimated-timing-30-minutes">Estimated timing: 30 minutes</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_09a-Implement_Web_Apps.html#architecture-diagram">Architecture diagram</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_09a-Implement_Web_Apps.html#exercise-1">Exercise 1</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_09a-Implement_Web_Apps.html#task-1-create-an-azure-web-app">Task 1: Create an Azure web app</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_09a-Implement_Web_Apps.html#task-2-create-a-staging-deployment-slot">Task 2: Create a staging deployment slot</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_09a-Implement_Web_Apps.html#task-3-configure-web-app-deployment-settings">Task 3: Configure web app deployment settings</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_09a-Implement_Web_Apps.html#task-4-deploy-code-to-the-staging-deployment-slot">Task 4: Deploy code to the staging deployment slot</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_09a-Implement_Web_Apps.html#task-5-swap-the-staging-slots">Task 5: Swap the staging slots</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_09a-Implement_Web_Apps.html#task-6-configure-and-test-autoscaling-of-the-azure-web-app">Task 6: Configure and test autoscaling of the Azure web app</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_09a-Implement_Web_Apps.html#clean-up-resources">Clean up resources</a></li><li class="nav-item"><a class="nav-link" href="https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/Instructions/Labs/LAB_09a-Implement_Web_Apps.html#review">Review</a></li></ul>
+                </nav>         
+            </aside>
+            <hr class="">
+            <article class="col-sm-10 mb-5">
+                <h1 id="lab-09a---implement-web-apps">Lab 09a - Implement Web Apps</h1>
+<h1 id="student-lab-manual">Student lab manual</h1>
+
+<h2 id="lab-scenario">Lab scenario</h2>
+
+<p>You need to evaluate the use of Azure Web apps for hosting Contoso’s web sites, hosted currently in the company’s on-premises data centers. The web sites are running on Windows servers using PHP runtime stack. You also need to determine how you can implement DevOps practices by leveraging Azure web apps deployment slots.</p>
+
+<p><strong>Note:</strong> An <strong><a href="https://mslabs.cloudguides.com/guides/AZ-104%20Exam%20Guide%20-%20Microsoft%20Azure%20Administrator%20Exercise%2013">interactive lab simulation</a></strong> is available that allows you to click through this lab at your own pace. You may find slight differences between the interactive simulation and the hosted lab, but the core concepts and ideas being demonstrated are the same.</p>
+
+<h2 id="objectives">Objectives</h2>
+
+<p>In this lab, you will:</p>
+
+<ul>
+  <li>Task 1: Create an Azure web app</li>
+  <li>Task 2: Create a staging deployment slot</li>
+  <li>Task 3: Configure web app deployment settings</li>
+  <li>Task 4: Deploy code to the staging deployment slot</li>
+  <li>Task 5: Swap the staging slots</li>
+  <li>Task 6: Configure and test autoscaling of the Azure web app</li>
+</ul>
+
+<h2 id="estimated-timing-30-minutes">Estimated timing: 30 minutes</h2>
+
+<h2 id="architecture-diagram">Architecture diagram</h2>
+
+<p><a href="./AZ-104-MicrosoftAzureAdministrator_files/lab09a.png" target="_blank"><img src="./AZ-104-MicrosoftAzureAdministrator_files/lab09a.png" alt="image"></a></p>
+
+<h3 id="instructions">Instructions</h3>
+
+<h2 id="exercise-1">Exercise 1</h2>
+
+<h2 id="task-1-create-an-azure-web-app">Task 1: Create an Azure web app</h2>
+
+<p>In this task, you will create an Azure web app.</p>
+
+<ol>
+  <li>
+    <p>Sign in to the <a href="http://portal.azure.com/"><strong>Azure portal</strong></a>.</p>
+  </li>
+  <li>
+    <p>In the Azure portal, search for and select <strong>App services</strong>, and, on the <strong>App Services</strong> blade, click <strong>+ Create</strong>.</p>
+  </li>
+  <li>
+    <p>On the <strong>Basics</strong> tab of the <strong>Create Web App</strong> blade, specify the following settings (leave others with their default values):</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Subscription</td>
+          <td>the name of the Azure subscription you are using in this lab</td>
+        </tr>
+        <tr>
+          <td>Resource group</td>
+          <td>the name of a new resource group <strong>az104-09a-rg1</strong></td>
+        </tr>
+        <tr>
+          <td>Web app name</td>
+          <td>any globally unique name</td>
+        </tr>
+        <tr>
+          <td>Publish</td>
+          <td><strong>Code</strong></td>
+        </tr>
+        <tr>
+          <td>Runtime stack</td>
+          <td><strong>PHP 8.2</strong></td>
+        </tr>
+        <tr>
+          <td>Operating system</td>
+          <td><strong>Linux</strong></td>
+        </tr>
+        <tr>
+          <td>Region</td>
+          <td>the name of an Azure region where you can provision Azure web apps</td>
+        </tr>
+        <tr>
+          <td>Pricing plans</td>
+          <td>accept the default configuration</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Click <strong>Review + create</strong>. On the <strong>Review + create</strong> tab of the <strong>Create Web App</strong> blade, ensure that the validation passed and click <strong>Create</strong>.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: Wait until the web app is created before you proceed to the next task. This should take about a minute.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>On the deployment blade, click <strong>Go to resource</strong>.</p>
+  </li>
+</ol>
+
+<h2 id="task-2-create-a-staging-deployment-slot">Task 2: Create a staging deployment slot</h2>
+
+<p>In this task, you will create a staging deployment slot.</p>
+
+<ol>
+  <li>
+    <p>On the blade of the newly deployed web app, click the <strong>Default domain</strong> link to display the default web page in a new browser tab.</p>
+  </li>
+  <li>
+    <p>Close the new browser tab and, back in the Azure portal, in the <strong>Deployment</strong> section of the web app blade, click <strong>Deployment slots</strong>.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: The web app, at this point, has a single deployment slot labeled <strong>PRODUCTION</strong>.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Click <strong>+ Add slot</strong>, and add a new slot with the following settings:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Name</td>
+          <td><strong>staging</strong></td>
+        </tr>
+        <tr>
+          <td>Clone settings from</td>
+          <td><strong>Do not clone settings</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Back on the <strong>Deployment slots</strong> blade of the web app, click the entry representing the newly created staging slot.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: This will open the blade displaying the properties of the staging slot.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Review the staging slot blade and note that its URL differs from the one assigned to the production slot.</p>
+  </li>
+</ol>
+
+<h2 id="task-3-configure-web-app-deployment-settings">Task 3: Configure web app deployment settings</h2>
+
+<p>In this task, you will configure web app deployment settings.</p>
+
+<ol>
+  <li>
+    <p>On the staging deployment slot blade, in the <strong>Deployment</strong> section, click <strong>Deployment Center</strong> and then select the <strong>Settings</strong> tab.</p>
+
+    <blockquote>
+      <p><strong>Note:</strong> Make sure you are on the staging slot blade (rather than the production slot).</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>On the <strong>Settings</strong> tab, in the <strong>Source</strong> drop-down list, select <strong>Local Git</strong> and click the <strong>Save</strong> button</p>
+  </li>
+  <li>
+    <p>On the <strong>Deployment Center</strong> blade, copy the <strong>Git Clone Uri</strong> entry to Notepad.</p>
+
+    <blockquote>
+      <p><strong>Note:</strong> You will need the Git Clone Uri value in the next task of this lab.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>On the <strong>Deployment Center</strong> blade, select the <strong>Local Git/FTPS credentials</strong> tab, in the <strong>User Scope</strong> section, specify the following settings, and click <strong>Save</strong>.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>User name</td>
+          <td>any globally unique name (see note)</td>
+        </tr>
+        <tr>
+          <td>Password</td>
+          <td>any password that satisfies complexity requirements (see note)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <blockquote>
+      <p><strong>Note:</strong> Copy these credentials to Notepad. You will need them later.</p>
+    </blockquote>
+
+    <blockquote>
+      <p><strong>Note:</strong> These credentials will be passed through the URI. Do not include any special charaters that affect the interpretation of the URI. For example, @, $, or #. An asterick or plus sign (in the middle of the string) would work.</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="task-4-deploy-code-to-the-staging-deployment-slot">Task 4: Deploy code to the staging deployment slot</h2>
+
+<p>In this task, you will deploy code to the staging deployment slot.</p>
+
+<ol>
+  <li>
+    <p>In the Azure portal, open the <strong>Azure Cloud Shell</strong> by clicking on the icon in the top right of the Azure Portal.</p>
+  </li>
+  <li>
+    <p>If prompted to select either <strong>Bash</strong> or <strong>PowerShell</strong>, select <strong>PowerShell</strong>.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: If this is the first time you are starting <strong>Cloud Shell</strong> and you are presented with the <strong>You have no storage mounted</strong> message, select the subscription you are using in this lab, and click <strong>Create storage</strong>.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>From the Cloud Shell pane, run the following to clone the remote repository containing the code for the web app.</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock0" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock0" class="mt-0"><code class="language-powershell">git clone https://github.com/Azure-Samples/php-docs-hello-world
+</code></pre>
+  </li>
+  <li>
+    <p>From the Cloud Shell pane, run the following to set the current location to the newly created clone of the local repository containing the sample web app code.</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock1" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock1" class="mt-0"><code class="language-powershell">Set-Location -Path $HOME/php-docs-hello-world/
+</code></pre>
+  </li>
+  <li>
+    <p>From the Cloud Shell pane, run the following to add the remote git (make sure to replace the <code>[deployment_user_name]</code> and <code>[git_clone_uri]</code> placeholders with the value of the <strong>Deployment Credentials</strong> user name and <strong>Git Clone Uri</strong>, respectively, which you identified in previous task):</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock2" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock2" class="mt-0"><code class="language-powershell">git remote add [deployment_user_name] [git_clone_uri]
+</code></pre>
+
+    <blockquote>
+      <p><strong>Note</strong>: The value following <code>git remote add</code> does not have to match the <strong>Deployment Credentials</strong> user name, but has to be unique</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>From the Cloud Shell pane, run the following to push the sample web app code from the local repository to the Azure web app staging deployment slot (make sure to replace the placeholder values with the value of the <strong>Deployment Credentials</strong> user name and password and the app name, which you identified in previous task):</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock3" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock3" class="mt-0"><code class="language-powershell"> git push https://&lt;deployment-username&gt;:&lt;deployment-password&gt;@&lt;app-name&gt;-staging.scm.azurewebsites.net/&lt;app-name&gt;.git master
+</code></pre>
+  </li>
+  <li>
+    <p>Close the Cloud Shell pane.</p>
+  </li>
+  <li>
+    <p>On the staging slot blade, click <strong>Overview</strong> and then click the <strong>Default domain</strong> link to display the default web page in a new browser tab.</p>
+  </li>
+  <li>
+    <p>Verify that the browser page displays the <strong>Hello World!</strong> message and close the new tab.</p>
+  </li>
+</ol>
+
+<h2 id="task-5-swap-the-staging-slots">Task 5: Swap the staging slots</h2>
+
+<p>In this task, you will swap the staging slot with the production slot</p>
+
+<ol>
+  <li>
+    <p>Navigate back to the blade displaying the production slot of the web app.</p>
+  </li>
+  <li>
+    <p>In the <strong>Deployment</strong> section, click <strong>Deployment slots</strong> and then, click <strong>Swap</strong> toolbar icon.</p>
+  </li>
+  <li>
+    <p>On the <strong>Swap</strong> blade, review the default settings and click <strong>Swap</strong>.</p>
+  </li>
+  <li>
+    <p>Click <strong>Overview</strong> on the production slot blade of the web app and then click the <strong>Default domain</strong> link to display the web site home page in a new browser tab.</p>
+  </li>
+  <li>
+    <p>Verify the default web page has been replaced with the <strong>Hello World!</strong> page.</p>
+  </li>
+</ol>
+
+<h2 id="task-6-configure-and-test-autoscaling-of-the-azure-web-app">Task 6: Configure and test autoscaling of the Azure web app</h2>
+
+<p>In this task, you will configure and test autoscaling of Azure web app.</p>
+
+<ol>
+  <li>
+    <p>On the blade displaying the production slot of the web app, in the <strong>Settings</strong> section, click <strong>Scale out (App Service plan)</strong>.</p>
+  </li>
+  <li>
+    <p>From the <strong>Scaling section</strong> select the <strong>Rule Based</strong> option, then click on the <strong>Manage rules based scaling</strong> link.</p>
+  </li>
+  <li>
+    <p>Click <strong>Custom autoscale</strong>.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: You also have the option of scaling the web app manually.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Select <strong>Scale based on a metric</strong> and click <strong>+ Add a rule</strong></p>
+  </li>
+  <li>
+    <p>On the <strong>Scale rule</strong> blade, specify the following settings (leave others with their default values):</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Metric source</td>
+          <td><strong>Current resource</strong></td>
+        </tr>
+        <tr>
+          <td>Metric namespace</td>
+          <td><strong>standard metrics</strong></td>
+        </tr>
+        <tr>
+          <td>Metric name</td>
+          <td><strong>CPU Percentage</strong></td>
+        </tr>
+        <tr>
+          <td>Operator</td>
+          <td><strong>Greater than</strong></td>
+        </tr>
+        <tr>
+          <td>Metric threshold to trigger scale action</td>
+          <td><strong>10</strong></td>
+        </tr>
+        <tr>
+          <td>Duration (in minutes)</td>
+          <td><strong>1</strong></td>
+        </tr>
+        <tr>
+          <td>Time grain statistic</td>
+          <td><strong>Maximum</strong></td>
+        </tr>
+        <tr>
+          <td>Time aggregation</td>
+          <td><strong>Maximum</strong></td>
+        </tr>
+        <tr>
+          <td>Operation</td>
+          <td><strong>Increase count by</strong></td>
+        </tr>
+        <tr>
+          <td>Instance count</td>
+          <td><strong>1</strong></td>
+        </tr>
+        <tr>
+          <td>Cool down (minutes)</td>
+          <td><strong>5</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <blockquote>
+      <p><strong>Note</strong>: These values do not represent a realistic configuration, since their purpose is to trigger autoscaling as soon as possible, without extended wait period.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Click <strong>Add</strong> and, back on the App Service plan scaling blade, specify the following settings (leave others with their default values):</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Instance limits Minimum</td>
+          <td><strong>1</strong></td>
+        </tr>
+        <tr>
+          <td>Instance limits Maximum</td>
+          <td><strong>2</strong></td>
+        </tr>
+        <tr>
+          <td>Instance limits Default</td>
+          <td><strong>1</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <p>Click <strong>Save</strong>.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: If you got an error complaining about ‘microsoft.insights’ resource provider not being registered, run <code>az provider register --namespace 'Microsoft.Insights'</code> in your cloudshell and retry saving your auto scale rules.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>In the Azure portal, open the <strong>Azure Cloud Shell</strong> by clicking on the icon in the top right of the Azure Portal.</p>
+  </li>
+  <li>
+    <p>If prompted to select either <strong>Bash</strong> or <strong>PowerShell</strong>, select <strong>PowerShell</strong>.</p>
+  </li>
+  <li>
+    <p>From the Cloud Shell pane, run the following to identify the URL of the Azure web app.</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock4" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock4" class="mt-0"><code class="language-powershell">$rgName = 'az104-09a-rg1'
+
+$webapp = Get-AzWebApp -ResourceGroupName $rgName
+</code></pre>
+  </li>
+  <li>
+    <p>From the Cloud Shell pane, run the following to start and infinite loop that sends the HTTP requests to the web app:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock5" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock5" class="mt-0"><code class="language-powershell">while ($true) { Invoke-WebRequest -Uri $webapp.DefaultHostName }
+</code></pre>
+  </li>
+  <li>
+    <p>Minimize the Cloud Shell pane (but do not close it) and, on the web app blade, in the Settings section, click <strong>Scale out (App Service plan)</strong>.</p>
+  </li>
+  <li>
+    <p>Select <strong>Autoscale Settings</strong>, select the <strong>Run history</strong> tab. Under <strong>Show data for last</strong>, select <strong>1 hour</strong> and check the <strong>Observed resource instance count</strong>.</p>
+  </li>
+  <li>
+    <p>Monitor the utilization and the number of instances for a few minutes.</p>
+
+    <blockquote>
+      <p><strong>Note</strong>: You may need to <strong>Refresh</strong> the page.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>Once you notice that the number of instances has increased to 2, reopen the Cloud Shell pane and terminate the script by pressing <strong>Ctrl+C</strong>.</p>
+  </li>
+  <li>
+    <p>Close the Cloud Shell pane.</p>
+  </li>
+</ol>
+
+<h2 id="clean-up-resources">Clean up resources</h2>
+
+<blockquote>
+  <p><strong>Note</strong>: Remember to remove any newly created Azure resources that you no longer use. Removing unused resources ensures you will not see unexpected charges.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>Note</strong>:  Don’t worry if the lab resources cannot be immediately removed. Sometimes resources have dependencies and take a long time to delete. It is a common Administrator task to monitor resource usage, so just periodically review your resources in the Portal to see how the cleanup is going.</p>
+</blockquote>
+
+<ol>
+  <li>
+    <p>In the Azure portal, open the <strong>PowerShell</strong> session within the <strong>Cloud Shell</strong> pane.</p>
+  </li>
+  <li>
+    <p>List all resource groups created throughout the labs of this module by running the following command:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock6" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock6" class="mt-0"><code class="language-powershell">Get-AzResourceGroup -Name 'az104-09a*'
+</code></pre>
+  </li>
+  <li>
+    <p>Delete all resource groups you created throughout the labs of this module by running the following command:</p>
+
+    <div class="code-header mt-3 mb-0 bg-light d-flex justify-content-between border"><span class="mx-2 text-muted text-capitalize font-weight-light">code</span><button class="m-0 btn btn-code btn-sm btn-light codeBtn rounded-0 border-left text-muted font-weight-light" data-clipboard-target="#codeBlock7" type="button"><i class="fa fa-files-o mr-2" aria-hidden="true"></i>Copy</button></div><pre id="codeBlock7" class="mt-0"><code class="language-powershell">Get-AzResourceGroup -Name 'az104-09a*' | Remove-AzResourceGroup -Force -AsJob
+</code></pre>
+
+    <blockquote>
+      <p><strong>Note</strong>: The command executes asynchronously (as determined by the -AsJob parameter), so while you will be able to run another PowerShell command immediately afterwards within the same PowerShell session, it will take a few minutes before the resource groups are actually removed.</p>
+    </blockquote>
+  </li>
+</ol>
+
+<h2 id="review">Review</h2>
+
+<p>In this lab, you have:</p>
+
+<ul>
+  <li>Created an Azure web app</li>
+  <li>Created a staging deployment slot</li>
+  <li>Configured web app deployment settings</li>
+  <li>Deployed code to the staging deployment slot</li>
+  <li>Swapped the staging slots</li>
+  <li>Configured and test autoscaling of the Azure web app</li>
+</ul>
+
+            </article>
+        </main>
+    </div>
+    <footer class="fixed-bottom d-print-none">
+        <nav class="navbar navbar-light bg-light d-flex justify-content-around">
+            <span class="navbar-text">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                <a href="https://github.com/MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator" target="_blank" class="ml-2">
+                    MicrosoftLearning/AZ-104-MicrosoftAzureAdministrator
+                </a>
+            </span>
+        </nav>
+    </footer>
+    <script src="./AZ-104-MicrosoftAzureAdministrator_files/jquery-3.2.1.slim.min.js.download" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="./AZ-104-MicrosoftAzureAdministrator_files/popper.min.js.download" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="./AZ-104-MicrosoftAzureAdministrator_files/bootstrap.min.js.download" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="./AZ-104-MicrosoftAzureAdministrator_files/clipboard.min.js.download"></script>
+    <script src="./AZ-104-MicrosoftAzureAdministrator_files/highlight.min.js.download"></script>
+    <script src="./AZ-104-MicrosoftAzureAdministrator_files/script.js.download"></script>
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;full&quot;,&quot;isActive&quot;:true,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

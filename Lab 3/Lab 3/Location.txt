@@ -1,0 +1,10 @@
+Primary Location : East US
+Secondary Location : West US
+
+URL : https://mukit.blob.core.windows.net/az104-07-container/licenses/LICENSE.txt
+
+Blob SAS URL : https://mukit.blob.core.windows.net/az104-07-container/licenses/LICENSE.txt?sp=r&st=2023-09-17T03:43:06Z&se=2023-09-19T03:43:06Z&spr=https&sv=2022-11-02&sr=b&sig=2Zg%2FZqWZ8xUfx7f5jFqiojinsKD9yo7d00TFlMymWls%3D
+
+Blob SAS Token : sp=r&st=2023-09-17T03:43:06Z&se=2023-09-19T03:43:06Z&spr=https&sv=2022-11-02&sr=b&sig=2Zg%2FZqWZ8xUfx7f5jFqiojinsKD9yo7d00TFlMymWls%3D
+
+Invoke-WebRequest -URI 'https://mukit.blob.core.windows.net/az104-07-container/licenses/LICENSE.txt?sp=r&st=2023-09-17T03:43:06Z&se=2023-09-19T03:43:06Z&spr=https&sv=2022-11-02&sr=b&sig=2Zg%2FZqWZ8xUfx7f5jFqiojinsKD9yo7d00TFlMymWls%3D'
